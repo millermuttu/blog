@@ -11,7 +11,8 @@ I am from [Koppal](https://en.wikipedia.org/wiki/Koppal), karnataka, i born and 
 
 I started my courier as data scientist in [RBEI](https://www.bosch.com/). and worked on various intresting topics for almost 5 years in bosch, untill i cameout to do my own startup [checkag](https://www.checkag.com/)
 
-This is what i am currently busy with:
+
+**This is what i am currently busy with:**
 
 - 🔭 I’m currently working on : My own startup
 - 🌱 I’m currently learning : MLops, Web development.
@@ -22,12 +23,6 @@ This is what i am currently busy with:
 - 😄 Pronouns: Mallik
 - ⚡ Fun fact: i like to hangout with people and i dont have people😄. same with my travle story, l like to roam more countries and havent got a job abroad😄
 
-<br />
-
-<h3 align="Left">Tech Stack</h3>
-
-<img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/python/python.png" alt="drawing" width="50" height="50"/> <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/r/r.png" alt="drawing" width="50" height="50"/> <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/matlab/matlab.png" alt="drawing" width="50" height="50"/> 
-<img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/julia/julia.png" alt="drawing" width="50" height="50"/>
 
 <br />
 
