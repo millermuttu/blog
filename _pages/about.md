@@ -9,7 +9,7 @@ permalink: /about/
 
 I am from [Koppal](https://en.wikipedia.org/wiki/Koppal), karnataka, i born and bought up in this small town from North Karnataka. i completed my early schooling till 10th in koppal and moved to hubli for Pre university education. i did my PU in science from Chetan PU collge and secured CET rank of 666 (Yes!! fancy number) and got into [RVCE](https://en.wikipedia.org/wiki/R.V._College_of_Engineering) for BE in Electronics and communication.
 
-I started my courier as data scientist in [RBEI](https://www.bosch.com/). and worked on various intresting topics for almost 5 years in bosch, untill i cameout to do my own startup [checkag](https://www.checkag.com/)
+I started my career as data scientist in [RBEI](https://www.bosch.com/). and worked on various intresting topics for almost 5 years in bosch, untill i cameout to do my own startup [checkag](https://www.checkag.com/)
 
 
 **This is what i am currently busy with:**
