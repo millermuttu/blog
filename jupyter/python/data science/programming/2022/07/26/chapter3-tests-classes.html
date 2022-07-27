@@ -1,0 +1,3449 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Data science revision - chapter 3 | Mallikarjun Sajjan’s Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Data science revision - chapter 3" />
+<meta name="author" content="Mallikarju Sajjan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Unit Tests &amp; Classes" />
+<meta property="og:description" content="Unit Tests &amp; Classes" />
+<link rel="canonical" href="https://millermuttu.github.io/blog/jupyter/python/data%20science/programming/2022/07/26/chapter3-tests-classes.html" />
+<meta property="og:url" content="https://millermuttu.github.io/blog/jupyter/python/data%20science/programming/2022/07/26/chapter3-tests-classes.html" />
+<meta property="og:site_name" content="Mallikarjun Sajjan’s Blog" />
+<meta property="og:image" content="https://millermuttu.github.io/blog/images/DS.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-07-26T00:00:00-05:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://millermuttu.github.io/blog/images/DS.png" />
+<meta property="twitter:title" content="Data science revision - chapter 3" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mallikarju Sajjan"},"dateModified":"2022-07-26T00:00:00-05:00","datePublished":"2022-07-26T00:00:00-05:00","description":"Unit Tests &amp; Classes","headline":"Data science revision - chapter 3","image":"https://millermuttu.github.io/blog/images/DS.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://millermuttu.github.io/blog/jupyter/python/data%20science/programming/2022/07/26/chapter3-tests-classes.html"},"url":"https://millermuttu.github.io/blog/jupyter/python/data%20science/programming/2022/07/26/chapter3-tests-classes.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://millermuttu.github.io/blog/feed.xml" title="Mallikarjun Sajjan's Blog" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" /><script src="https://hypothes.is/embed.js" async></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Mallikarjun Sajjan&#39;s Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Data science revision - chapter 3</h1><p class="page-description">Unit Tests & Classes</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-07-26T00:00:00-05:00" itemprop="datePublished">
+        Jul 26, 2022
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Mallikarju Sajjan</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      25 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#jupyter">jupyter</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#python">python</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#data science">data science</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#programming">programming</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/millermuttu/blog/tree/master/_notebooks/2022-04-1-chapter3-tests-classes.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/millermuttu/blog/master?filepath=_notebooks%2F2022-04-1-chapter3-tests-classes.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/millermuttu/blog/blob/master/_notebooks/2022-04-1-chapter3-tests-classes.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          <div class="px-2">
+  <a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Fmillermuttu%2Fblog%2Fblob%2Fmaster%2F_notebooks%2F2022-04-1-chapter3-tests-classes.ipynb" target="_blank">
+      <img class="notebook-badge-image" src="/blog/assets/badges/deepnote.svg" alt="Launch in Deepnote"/>
+  </a>
+</div>
+
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#Chapter-3:-Unit-Tests-&-Classes">Chapter 3: Unit Tests &amp; Classes </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#chapter-outline">Chapter Outline</a></li>
+<li class="toc-entry toc-h2"><a href="#Chapter-Learning-Objectives">Chapter Learning Objectives </a></li>
+<li class="toc-entry toc-h2"><a href="#1.-Unit-Tests">1. Unit Tests </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#assert-Statements">assert Statements </a></li>
+<li class="toc-entry toc-h3"><a href="#Test-Driven-Development">Test Driven Development </a></li>
+<li class="toc-entry toc-h3"><a href="#EAFP-vs-LBYL">EAFP vs LBYL </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#2.-Debugging">2. Debugging </a></li>
+<li class="toc-entry toc-h2"><a href="#3.-Python-Classes">3. Python Classes </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Why-Create-Your-Own-Types/Classes?">Why Create Your Own Types/Classes? </a></li>
+<li class="toc-entry toc-h3"><a href="#Creating-a-Class">Creating a Class </a></li>
+<li class="toc-entry toc-h3"><a href="#Instance-&-Class-Attributes">Instance &amp; Class Attributes </a></li>
+<li class="toc-entry toc-h3"><a href="#Methods,-Class-Methods-&-Static-Methods">Methods, Class Methods &amp; Static Methods </a></li>
+<li class="toc-entry toc-h3"><a href="#Decorators">Decorators </a></li>
+<li class="toc-entry toc-h3"><a href="#Inheritance-&-Subclasses">Inheritance &amp; Subclasses </a></li>
+<li class="toc-entry toc-h3"><a href="#Getters/Setters/Deleters">Getters/Setters/Deleters </a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2022-04-1-chapter3-tests-classes.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="/blog/images/copied_from_nb/../images/banner.png" alt=""></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Chapter-3:-Unit-Tests-&amp;-Classes">
+<a class="anchor" href="#Chapter-3:-Unit-Tests-&amp;-Classes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Chapter 3: Unit Tests &amp; Classes<a class="anchor-link" href="#Chapter-3:-Unit-Tests-&amp;-Classes"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<h2>
+<a class="anchor" href="#chapter-outline" aria-hidden="true"><span class="octicon octicon-link"></span></a>Chapter Outline<span class="tocSkip"></span>
+</h2>
+<p></p>
+<hr>
+<div class="toc"><ul class="toc-item">
+<li><span><a href="#1.-Unit-Tests" data-toc-modified-id="1.-Unit-Tests-1">1. Unit Tests</a></span></li>
+<li><span><a href="#2.-Debugging" data-toc-modified-id="2.-Debugging-2">2. Debugging</a></span></li>
+<li><span><a href="#3.-Python-Classes" data-toc-modified-id="3.-Python-Classes-3">3. Python Classes</a></span></li>
+</ul></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Chapter-Learning-Objectives">
+<a class="anchor" href="#Chapter-Learning-Objectives" aria-hidden="true"><span class="octicon octicon-link"></span></a>Chapter Learning Objectives<a class="anchor-link" href="#Chapter-Learning-Objectives"> </a>
+</h2>
+<hr>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>Formulate a test case to prove a function design specification.</li>
+<li>Use an <code>assert</code> statement to validate a test case.</li>
+<li>Debug Python code with the <code>pdb</code> module, or by using <code>%debug</code> in a Jupyter code cell.</li>
+<li>Describe the difference between a <code>class</code> and a <code>function</code> in Python.</li>
+<li>Be able to create a <code>class</code>.</li>
+<li>Differentiate between <code>instance attributes</code> and <code>class attributes</code>.</li>
+<li>Differentiate between <code>methods</code>, <code>class methods</code> and <code>static methods</code>.</li>
+<li>Understand and implement <code>subclassing</code>/<code>inheritance</code> with Python classes.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="1.-Unit-Tests">
+<a class="anchor" href="#1.-Unit-Tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Unit Tests<a class="anchor-link" href="#1.-Unit-Tests"> </a>
+</h2>
+<hr>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Last chapter we discussed Python functions. But how can we be sure that our function is doing exactly what we expect it to do? <strong>Unit testing</strong> is the process of testing our function to ensure it's giving us the results we expect. Let's briefly introduce the concept here.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="assert-Statements">
+<a class="anchor" href="#assert-Statements" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>assert</code> Statements<a class="anchor-link" href="#assert-Statements"> </a>
+</h3>
+<p><code>assert</code> statements are the most common way to test your functions. They cause your program to fail if the tested condition is <code>False</code>. The syntax is:</p>
+<div class="highlight"><pre><span></span><span class="k">assert</span> <span class="n">expression</span><span class="p">,</span> <span class="s2">"Error message if expression is False or raises an error."</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_raises-exception">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">"1 is not equal to 2."</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">AssertionError</span>                            Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-1-74b71e52d7cf&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span><span class="ansi-green-fg">assert</span> <span class="ansi-cyan-fg">1</span> <span class="ansi-blue-fg">==</span> <span class="ansi-cyan-fg">2</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">"1 is not equal to 2."</span>
+
+<span class="ansi-red-fg">AssertionError</span>: 1 is not equal to 2.</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Asserting that two numbers are approximately equal can also be helpful. Due to the limitations of floating-point arithmetic in computers, numbers we expect to be equal are sometimes not:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_raises-exception">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="mf">0.1</span> <span class="o">+</span> <span class="mf">0.2</span> <span class="o">==</span> <span class="mf">0.3</span><span class="p">,</span> <span class="s2">"Not equal!"</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">AssertionError</span>                            Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-2-be33c16f53c8&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span><span class="ansi-green-fg">assert</span> <span class="ansi-cyan-fg">0.1</span> <span class="ansi-blue-fg">+</span> <span class="ansi-cyan-fg">0.2</span> <span class="ansi-blue-fg">==</span> <span class="ansi-cyan-fg">0.3</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">"Not equal!"</span>
+
+<span class="ansi-red-fg">AssertionError</span>: Not equal!</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>  <span class="c1"># we'll learn about importing modules next chapter</span>
+<span class="k">assert</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="mf">0.1</span> <span class="o">+</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span> <span class="s2">"Not equal!"</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can test any statement that evaluates to a boolean:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_raises-exception">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="s1">'varada'</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'mike'</span><span class="p">,</span> <span class="s1">'tom'</span><span class="p">,</span> <span class="s1">'tiffany'</span><span class="p">],</span> <span class="s2">"Instructor not present!"</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">AssertionError</span>                            Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-5-ff5cfa3cbd54&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span><span class="ansi-green-fg">assert</span> <span class="ansi-blue-fg">'varada'</span> <span class="ansi-green-fg">in</span> <span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">'mike'</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">'tom'</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">'tiffany'</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">"Instructor not present!"</span>
+
+<span class="ansi-red-fg">AssertionError</span>: Instructor not present!</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Test-Driven-Development">
+<a class="anchor" href="#Test-Driven-Development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Test Driven Development<a class="anchor-link" href="#Test-Driven-Development"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Test Driven Development (TDD) is where you write your tests before your actual function (<a href="https://py-pkgs.org/chapters/04-testing#when-to-write-your-tests">more here</a>). This may seem a little counter-intuitive, but you're creating the expectations of your function before the actual function. This can be helpful for several reasons:</p>
+<ul>
+<li>you will better understand exactly what code you need to write;</li>
+<li>you are forced to write tests upfront;</li>
+<li>you won’t encounter large time-consuming bugs down the line; and,</li>
+<li>it helps to keep your workflow manageable by focussing on small, incremental code improvements and additions.</li>
+</ul>
+<p>In general, the approach is as follows:</p>
+<ol>
+<li>Write a stub: a function that does nothing but accept all input parameters and return the correct datatype.</li>
+<li>Write tests to satisfy your design specifications.</li>
+<li>Outline the program with pseudo-code.</li>
+<li>Write code and test frequently.</li>
+<li>Write documentation.</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="EAFP-vs-LBYL">
+<a class="anchor" href="#EAFP-vs-LBYL" aria-hidden="true"><span class="octicon octicon-link"></span></a>EAFP vs LBYL<a class="anchor-link" href="#EAFP-vs-LBYL"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Somewhat related to testing and function design are the philosophies EAFP and LBYL. EAFP = "Easier to ask for fogiveness than permission". In coding lingo: try doing something, and if it doesn't work, catch the error. LBYL = "Look before you leap". In coding lingo: check that you can do something before trying to do it. These two acronyms refer to coding philosophies about how to write your code. Let's see an example:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'name'</span><span class="p">:</span> <span class="s1">'Doctor Python'</span><span class="p">,</span>
+     <span class="s1">'superpower'</span><span class="p">:</span> <span class="s1">'programming'</span><span class="p">,</span>
+     <span class="s1">'weakness'</span><span class="p">:</span> <span class="s1">'mountain dew'</span><span class="p">,</span>
+     <span class="s1">'enemies'</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">d</span><span class="p">[</span><span class="s1">'address'</span><span class="p">]</span>
+<span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Please forgive me!'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Please forgive me!
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="s1">'address'</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="n">d</span><span class="p">[</span><span class="s1">'address'</span><span class="p">]</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Saved you before you leapt!'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Saved you before you leapt!
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>While EAFP is often vouched for in Python, there's no right and wrong way to code and it's often context-specific. I personally mix the two philosophies most of the time.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="2.-Debugging">
+<a class="anchor" href="#2.-Debugging" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Debugging<a class="anchor-link" href="#2.-Debugging"> </a>
+</h2>
+<hr>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So if your Python code doesn't work: what do you do? At the moment, most of you probably do "manual testing" or "exploratory testing". You keep changing your code until it works, maybe add some print statements around the place to isolate any problems. For example, consider the <code>random_walker</code> code below, which is adapted with permission from COS 126, <a href="http://www.cs.princeton.edu/courses/archive/fall10/cos126/assignments/loops.html">Conditionals and Loops</a>:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_ignore">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">random</span>
+
+<span class="k">def</span> <span class="nf">random_walker</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Simulates T steps of a 2D random walk, and prints the result after each step.</span>
+<span class="sd">    Returns the squared distance from the origin.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    T : int</span>
+<span class="sd">        The number of steps to take.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        The squared distance from the origin to the endpoint, rounded to 2 decimals.</span>
+<span class="sd">        </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; random_walker(3)</span>
+<span class="sd">    (0, -1)</span>
+<span class="sd">    (0, 0)</span>
+<span class="sd">    (0, -1)</span>
+<span class="sd">    1.0</span>
+<span class="sd">    """</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+        <span class="n">rand</span> <span class="o">=</span> <span class="n">random</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">rand</span> <span class="o">&lt;</span> <span class="mf">0.25</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">rand</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">rand</span> <span class="o">&lt;</span> <span class="mf">0.75</span><span class="p">:</span>
+            <span class="n">y</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">y</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="nb">print</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">round</span><span class="p">((</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">y</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">random_walker</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(-1, 1)
+(-2, 2)
+(-3, 3)
+(-3, 4)
+(-3, 3)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>4.24</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If we re-run the code above, our random walker never goes right (the x-coordinate is never +ve). We might try to add some print statements here to see what's going on:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_ignore">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">random_walker</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Simulates T steps of a 2D random walk, and prints the result after each step.</span>
+<span class="sd">    Returns the squared distance from the origin.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    T : int</span>
+<span class="sd">        The number of steps to take.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        The squared distance from the origin to the endpoint, rounded to 2 decimals.</span>
+<span class="sd">        </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; random_walker(3)</span>
+<span class="sd">    (0, -1)</span>
+<span class="sd">    (0, 0)</span>
+<span class="sd">    (0, -1)</span>
+<span class="sd">    1.0</span>
+<span class="sd">    """</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+        <span class="n">rand</span> <span class="o">=</span> <span class="n">random</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">rand</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">rand</span> <span class="o">&lt;</span> <span class="mf">0.25</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"I'm going right!"</span><span class="p">)</span>
+            <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">rand</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"I'm going left!"</span><span class="p">)</span>
+            <span class="n">x</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">rand</span> <span class="o">&lt;</span> <span class="mf">0.75</span><span class="p">:</span>
+            <span class="n">y</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">y</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="nb">print</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">round</span><span class="p">((</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">y</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">random_walker</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0.9667856645891864
+(0, -1)
+0.4521273416101914
+I'm going left!
+(-1, 0)
+0.545326215986303
+(-1, 1)
+0.837732608088001
+(-1, 0)
+0.4505836355971342
+I'm going left!
+(-2, 1)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>2.24</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Ah! We see that even every time after a <code>"I'm going right!"</code> we immediately get a <code>"I'm going left!"</code>. The problem is in our <code>if</code> statements, we should be using <code>elif</code> for each statement after the intial <code>if</code>, otherwise multiple conditions may be met each time.</p>
+<p>This was a pretty simple debugging case, adding print statements is not always helpful or efficient. Alternatively we can use the module <code>pdb</code>. <a href="https://docs.python.org/3/library/pdb.html"><code>pdb</code> is the Python Debugger</a> included with the standard library. We can use <code>breakpoint()</code> to leverage <code>pdb</code> and set a "break point" at any point in our code and then inspect our variables. See the <code>pdb</code> docs <a href="https://docs.python.org/3/library/pdb.html">here</a> and this <a href="https://appletree.or.kr/quick_reference_cards/Python/Python%20Debugger%20Cheatsheet.pdf">cheatsheet</a> for help interacting with the debugger console.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_raises-exception">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">random_walker</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Simulates T steps of a 2D random walk, and prints the result after each step.</span>
+<span class="sd">    Returns the squared distance from the origin.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    T : int</span>
+<span class="sd">        The number of steps to take.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        The squared distance from the origin to the endpoint, rounded to 2 decimals.</span>
+<span class="sd">        </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; random_walker(3)</span>
+<span class="sd">    (0, -1)</span>
+<span class="sd">    (0, 0)</span>
+<span class="sd">    (0, -1)</span>
+<span class="sd">    1.0</span>
+<span class="sd">    """</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+        <span class="n">rand</span> <span class="o">=</span> <span class="n">random</span><span class="p">()</span>
+        <span class="n">breakpoint</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">rand</span> <span class="o">&lt;</span> <span class="mf">0.25</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"I'm going right!"</span><span class="p">)</span>
+            <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">rand</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"I'm going left!"</span><span class="p">)</span>
+            <span class="n">x</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">rand</span> <span class="o">&lt;</span> <span class="mf">0.75</span><span class="p">:</span>
+            <span class="n">y</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">y</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="nb">print</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">round</span><span class="p">((</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">y</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">random_walker</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&gt; <span class="ansi-green-fg">&lt;ipython-input-11-005ed635a05e&gt;</span>(31)<span class="ansi-cyan-fg">random_walker</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">     29 </span><span class="ansi-red-fg">        </span>rand <span class="ansi-blue-fg">=</span> random<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">     30 </span><span class="ansi-red-fg">        </span>breakpoint<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">---&gt; 31 </span><span class="ansi-red-fg">        </span><span class="ansi-green-fg">if</span> rand <span class="ansi-blue-fg">&lt;</span> <span class="ansi-cyan-fg">0.25</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">     32 </span><span class="ansi-red-fg">            </span>print<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">"I'm going right!"</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">     33 </span><span class="ansi-red-fg">            </span>x <span class="ansi-blue-fg">+=</span> <span class="ansi-cyan-fg">1</span>
+
+ipdb&gt;  rand
+0.23867380970947405
+ipdb&gt;  rand &lt; 0.25
+True
+ipdb&gt;  q
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">BdbQuit</span>                                   Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-11-005ed635a05e&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">     42</span>     <span class="ansi-green-fg">return</span> round<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">(</span>x <span class="ansi-blue-fg">**</span> <span class="ansi-cyan-fg">2</span> <span class="ansi-blue-fg">+</span> y <span class="ansi-blue-fg">**</span> <span class="ansi-cyan-fg">2</span><span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">**</span> <span class="ansi-cyan-fg">0.5</span><span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">2</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     43</span> 
+<span class="ansi-green-fg">---&gt; 44</span><span class="ansi-red-fg"> </span>random_walker<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">5</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">&lt;ipython-input-11-005ed635a05e&gt;</span> in <span class="ansi-cyan-fg">random_walker</span><span class="ansi-blue-fg">(T)</span>
+<span class="ansi-green-intense-fg ansi-bold">     29</span>         rand <span class="ansi-blue-fg">=</span> random<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     30</span>         breakpoint<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">---&gt; 31</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">if</span> rand <span class="ansi-blue-fg">&lt;</span> <span class="ansi-cyan-fg">0.25</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">     32</span>             print<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">"I'm going right!"</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     33</span>             x <span class="ansi-blue-fg">+=</span> <span class="ansi-cyan-fg">1</span>
+
+<span class="ansi-green-fg">&lt;ipython-input-11-005ed635a05e&gt;</span> in <span class="ansi-cyan-fg">random_walker</span><span class="ansi-blue-fg">(T)</span>
+<span class="ansi-green-intense-fg ansi-bold">     29</span>         rand <span class="ansi-blue-fg">=</span> random<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     30</span>         breakpoint<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">---&gt; 31</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">if</span> rand <span class="ansi-blue-fg">&lt;</span> <span class="ansi-cyan-fg">0.25</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">     32</span>             print<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">"I'm going right!"</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     33</span>             x <span class="ansi-blue-fg">+=</span> <span class="ansi-cyan-fg">1</span>
+
+<span class="ansi-green-fg">/opt/miniconda3/lib/python3.7/bdb.py</span> in <span class="ansi-cyan-fg">trace_dispatch</span><span class="ansi-blue-fg">(self, frame, event, arg)</span>
+<span class="ansi-green-intense-fg ansi-bold">     86</span>             <span class="ansi-green-fg">return</span> <span class="ansi-red-fg"># None</span>
+<span class="ansi-green-intense-fg ansi-bold">     87</span>         <span class="ansi-green-fg">if</span> event <span class="ansi-blue-fg">==</span> <span class="ansi-blue-fg">'line'</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">---&gt; 88</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>dispatch_line<span class="ansi-blue-fg">(</span>frame<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">     89</span>         <span class="ansi-green-fg">if</span> event <span class="ansi-blue-fg">==</span> <span class="ansi-blue-fg">'call'</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">     90</span>             <span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>dispatch_call<span class="ansi-blue-fg">(</span>frame<span class="ansi-blue-fg">,</span> arg<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-green-fg">/opt/miniconda3/lib/python3.7/bdb.py</span> in <span class="ansi-cyan-fg">dispatch_line</span><span class="ansi-blue-fg">(self, frame)</span>
+<span class="ansi-green-intense-fg ansi-bold">    111</span>         <span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>stop_here<span class="ansi-blue-fg">(</span>frame<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">or</span> self<span class="ansi-blue-fg">.</span>break_here<span class="ansi-blue-fg">(</span>frame<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">    112</span>             self<span class="ansi-blue-fg">.</span>user_line<span class="ansi-blue-fg">(</span>frame<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">--&gt; 113</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>quitting<span class="ansi-blue-fg">:</span> <span class="ansi-green-fg">raise</span> BdbQuit
+<span class="ansi-green-intense-fg ansi-bold">    114</span>         <span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>trace_dispatch
+<span class="ansi-green-intense-fg ansi-bold">    115</span> 
+
+<span class="ansi-red-fg">BdbQuit</span>: </pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So the correct code should be:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_ignore">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">random_walker</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Simulates T steps of a 2D random walk, and prints the result after each step.</span>
+<span class="sd">    Returns the squared distance from the origin.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    T : int</span>
+<span class="sd">        The number of steps to take.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    float</span>
+<span class="sd">        The squared distance from the origin to the endpoint, rounded to 2 decimals.</span>
+<span class="sd">        </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; random_walker(3)</span>
+<span class="sd">    (0, -1)</span>
+<span class="sd">    (0, 0)</span>
+<span class="sd">    (0, -1)</span>
+<span class="sd">    1.0</span>
+<span class="sd">    """</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+        <span class="n">rand</span> <span class="o">=</span> <span class="n">random</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">rand</span> <span class="o">&lt;</span> <span class="mf">0.25</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">rand</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">rand</span> <span class="o">&lt;</span> <span class="mf">0.75</span><span class="p">:</span>
+            <span class="n">y</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">y</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="nb">print</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">round</span><span class="p">((</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">y</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">random_walker</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(-1, 0)
+(-1, -1)
+(-2, -1)
+(-3, -1)
+(-3, -2)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>3.61</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I wanted to show <code>pdb</code> because it's the standard Python debugger. Most Python IDE's also have their own debugging workflow, for example, here's a tutorial on <a href="https://code.visualstudio.com/docs/python/python-tutorial#_configure-and-run-the-debugger">debugging in VSCode</a>. Within Jupyter, there is some "<a href="https://ipython.readthedocs.io/en/stable/interactive/magics.html#">magic</a>" commands that you can use. The one we are interested in here is <code>%debug</code>. There are a few ways you can use it, but the easiest is if a cell raises an error, we can create a new cell underneath and just write <code>%debug</code> and run that cell to debug our previous error.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_raises-exception">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">x</span> <span class="o">+</span> <span class="s1">'string'</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-13-496b359b128e&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> x <span class="ansi-blue-fg">=</span> <span class="ansi-cyan-fg">1</span>
+<span class="ansi-green-fg">----&gt; 2</span><span class="ansi-red-fg"> </span>x <span class="ansi-blue-fg">+</span> <span class="ansi-blue-fg">'string'</span>
+
+<span class="ansi-red-fg">TypeError</span>: unsupported operand type(s) for +: 'int' and 'str'</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_raises-exception">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">debug</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&gt; <span class="ansi-green-fg">&lt;ipython-input-13-496b359b128e&gt;</span>(2)<span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">      1 </span>x <span class="ansi-blue-fg">=</span> <span class="ansi-cyan-fg">1</span>
+<span class="ansi-green-fg">----&gt; 2 </span>x <span class="ansi-blue-fg">+</span> <span class="ansi-blue-fg">'string'</span>
+
+ipdb&gt;  x
+1
+ipdb&gt;  q
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The JupyterLab <a href="https://github.com/lckr/jupyterlab-variableInspector">variable inspector extension</a> is another related helpful tool.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="3.-Python-Classes">
+<a class="anchor" href="#3.-Python-Classes" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Python Classes<a class="anchor-link" href="#3.-Python-Classes"> </a>
+</h2>
+<hr>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We've seen data types like <code>dict</code> and <code>list</code> which are built into Python. We can also create our own data types. These are called <strong>classes</strong> and an instance of a class is called an <strong>object</strong> (classes documentation <a href="https://docs.python.org/3/tutorial/classes.html">here</a>). The general approach to programming using classes and objects is called <a href="https://en.wikipedia.org/wiki/Object-oriented_programming">object-oriented programming</a></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here, <code>d</code> is an object, whereas <code>dict</code> is a type</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>dict</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>type</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We say <code>d</code> is an <strong>instance</strong> of the <strong>type</strong> <code>dict</code>. Hence:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>True</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Why-Create-Your-Own-Types/Classes?">
+<a class="anchor" href="#Why-Create-Your-Own-Types/Classes?" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why Create Your Own Types/Classes?<a class="anchor-link" href="#Why-Create-Your-Own-Types/Classes?"> </a>
+</h3>
+<p>"Classes provide a means of bundling data and functionality together" (from the <a href="https://docs.python.org/3/tutorial/classes.html">Python docs</a>), in a way that's easy to use, reuse and build upon. It's easiest to discover the utility of classes through an example so let's get started!</p>
+<p>Say we want to start storing information about students and instructors in the University of British Columbia's Master of Data Science Program (MDS).</p>
+
+<pre><code>{note}
+Recall that the content of this site is adapted from material I used to teach the 2020/2021 offering of the course "DSCI 511 Python Programming for Data Science" for the University of British Columbia's Master of Data Science Program.</code></pre>
+<p>We'll start with first name, last name, and email address in a dictionary:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mds_1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'first'</span><span class="p">:</span> <span class="s1">'Tom'</span><span class="p">,</span>
+         <span class="s1">'last'</span><span class="p">:</span> <span class="s1">'Beuzen'</span><span class="p">,</span>
+         <span class="s1">'email'</span><span class="p">:</span> <span class="s1">'tom.beuzen@mds.com'</span><span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We also want to be able to extract a member's full name from their first and last name, but don't want to have to write out this information again. A function could be good for this:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">full_name</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">):</span>
+    <span class="sd">"""Concatenate first and last with a space."""</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">first</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">last</span><span class="si">}</span><span class="s2">"</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">full_name</span><span class="p">(</span><span class="n">mds_1</span><span class="p">[</span><span class="s1">'first'</span><span class="p">],</span> <span class="n">mds_1</span><span class="p">[</span><span class="s1">'last'</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'Tom Beuzen'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can just copy-paste the same code to create new members:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mds_2</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'first'</span><span class="p">:</span> <span class="s1">'Tiffany'</span><span class="p">,</span>
+         <span class="s1">'last'</span><span class="p">:</span> <span class="s1">'Timbers'</span><span class="p">,</span>
+         <span class="s1">'email'</span><span class="p">:</span> <span class="s1">'tiffany.timbers@mds.com'</span><span class="p">}</span>
+<span class="n">full_name</span><span class="p">(</span><span class="n">mds_2</span><span class="p">[</span><span class="s1">'first'</span><span class="p">],</span> <span class="n">mds_2</span><span class="p">[</span><span class="s1">'last'</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'Tiffany Timbers'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Creating-a-Class">
+<a class="anchor" href="#Creating-a-Class" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating a Class<a class="anchor-link" href="#Creating-a-Class"> </a>
+</h3>
+<p>The above was pretty inefficient. You can imagine that the more objects we want and the more complicated the objects get (more data, more functions) the worse this problem becomes! However, this is a perfect use case for a class! A class can be thought of as a <strong>blueprint</strong> for creating objects, in this case MDS members.</p>
+<p><strong>Terminology alert</strong>:</p>
+<ul>
+<li>Class data = "Attributes"</li>
+<li>Class functions = "Methods"</li>
+</ul>
+<p><strong>Syntax alert</strong>:</p>
+<ul>
+<li>We define a class with the <code>class</code> keyword, followed by a name and a colon (<code>:</code>):</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">mds_member</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mds_1</span> <span class="o">=</span> <span class="n">mds_member</span><span class="p">()</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">mds_1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>__main__.mds_member</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can add an <code>__init__</code> method to our class which will be run every time we create a new instance, for example, to add data to the instance. Let's add an <code>__init__</code> method to our <code>mds_member</code> class. <code>self</code> refers to the instance of a class and should always be passed to class methods as the first argument.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">mds_member</span><span class="p">:</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">):</span>
+        <span class="c1"># the below are called "attributes"</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">first</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="n">last</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"."</span> <span class="o">+</span> <span class="n">last</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"@mds.com"</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mds_1</span> <span class="o">=</span> <span class="n">mds_member</span><span class="p">(</span><span class="s1">'Varada'</span><span class="p">,</span> <span class="s1">'Kolhatkar'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">first</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">last</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">email</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Varada
+Kolhatkar
+varada.kolhatkar@mds.com
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To get the full name, we can use the function we defined earlier:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">full_name</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">first</span><span class="p">,</span> <span class="n">mds_1</span><span class="o">.</span><span class="n">last</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'Varada Kolhatkar'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>But a better way to do this is to integrate this function into our class as a <code>method</code>:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">mds_member</span><span class="p">:</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">first</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="n">last</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"."</span> <span class="o">+</span> <span class="n">last</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"@mds.com"</span>
+        
+    <span class="k">def</span> <span class="nf">full_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">first</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">last</span><span class="si">}</span><span class="s2">"</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mds_1</span> <span class="o">=</span> <span class="n">mds_member</span><span class="p">(</span><span class="s1">'Varada'</span><span class="p">,</span> <span class="s1">'Kolhatkar'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">first</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">last</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">email</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">full_name</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Varada
+Kolhatkar
+varada.kolhatkar@mds.com
+Varada Kolhatkar
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Notice that we need the parentheses above because we are calling a <code>method</code> (think of it as a function), not an <code>attribute</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Instance-&amp;-Class-Attributes">
+<a class="anchor" href="#Instance-&amp;-Class-Attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Instance &amp; Class Attributes<a class="anchor-link" href="#Instance-&amp;-Class-Attributes"> </a>
+</h3>
+<p>Attributes like <code>mds_1.first</code> are sometimes called <code>instance attributes</code>. They are specific to the object we have created. But we can also set <code>class attributes</code> which are the same amongst all instances of a class, they are defined outside of the <code>__init__</code> method.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">mds_member</span><span class="p">:</span>
+    
+    <span class="n">role</span> <span class="o">=</span> <span class="s2">"MDS member"</span> <span class="c1"># class attributes</span>
+    <span class="n">campus</span> <span class="o">=</span> <span class="s2">"UBC"</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">first</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="n">last</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"."</span> <span class="o">+</span> <span class="n">last</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"@mds.com"</span>
+        
+    <span class="k">def</span> <span class="nf">full_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">first</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">last</span><span class="si">}</span><span class="s2">"</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>All instances of our class share the class attribute:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mds_1</span> <span class="o">=</span> <span class="n">mds_member</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">,</span> <span class="s1">'Beuzen'</span><span class="p">)</span>
+<span class="n">mds_2</span> <span class="o">=</span> <span class="n">mds_member</span><span class="p">(</span><span class="s1">'Joel'</span><span class="p">,</span> <span class="s1">'Ostblom'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">mds_1</span><span class="o">.</span><span class="n">first</span><span class="si">}</span><span class="s2"> is at campus </span><span class="si">{</span><span class="n">mds_1</span><span class="o">.</span><span class="n">campus</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">mds_2</span><span class="o">.</span><span class="n">first</span><span class="si">}</span><span class="s2"> is at campus </span><span class="si">{</span><span class="n">mds_2</span><span class="o">.</span><span class="n">campus</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Tom is at campus UBC.
+Joel is at campus UBC.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can even change the class attribute after our instances have been created. This will affect all of our created instances:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mds_1</span> <span class="o">=</span> <span class="n">mds_member</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">,</span> <span class="s1">'Beuzen'</span><span class="p">)</span>
+<span class="n">mds_2</span> <span class="o">=</span> <span class="n">mds_member</span><span class="p">(</span><span class="s1">'Mike'</span><span class="p">,</span> <span class="s1">'Gelbart'</span><span class="p">)</span>
+<span class="n">mds_member</span><span class="o">.</span><span class="n">campus</span> <span class="o">=</span> <span class="s1">'UBC Okanagan'</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">mds_1</span><span class="o">.</span><span class="n">first</span><span class="si">}</span><span class="s2"> is at campus </span><span class="si">{</span><span class="n">mds_1</span><span class="o">.</span><span class="n">campus</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">mds_2</span><span class="o">.</span><span class="n">first</span><span class="si">}</span><span class="s2"> is at campus </span><span class="si">{</span><span class="n">mds_2</span><span class="o">.</span><span class="n">campus</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Tom is at campus UBC Okanagan.
+Mike is at campus UBC Okanagan.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can also change the class attribute for just a single instance. But this is typically not recommended because if you want differing attributes for instances, you should probably use <code>instance attributes</code>.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">mds_member</span><span class="p">:</span>
+    
+    <span class="n">role</span> <span class="o">=</span> <span class="s2">"MDS member"</span>
+    <span class="n">campus</span> <span class="o">=</span> <span class="s2">"UBC"</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">first</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="n">last</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"."</span> <span class="o">+</span> <span class="n">last</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"@mds.com"</span>
+        
+    <span class="k">def</span> <span class="nf">full_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">first</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">last</span><span class="si">}</span><span class="s2">"</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mds_1</span> <span class="o">=</span> <span class="n">mds_member</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">,</span> <span class="s1">'Beuzen'</span><span class="p">)</span>
+<span class="n">mds_2</span> <span class="o">=</span> <span class="n">mds_member</span><span class="p">(</span><span class="s1">'Mike'</span><span class="p">,</span> <span class="s1">'Gelbart'</span><span class="p">)</span>
+<span class="n">mds_1</span><span class="o">.</span><span class="n">campus</span> <span class="o">=</span> <span class="s1">'UBC Okanagan'</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">mds_1</span><span class="o">.</span><span class="n">first</span><span class="si">}</span><span class="s2"> is at campus </span><span class="si">{</span><span class="n">mds_1</span><span class="o">.</span><span class="n">campus</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">mds_2</span><span class="o">.</span><span class="n">first</span><span class="si">}</span><span class="s2"> is at campus </span><span class="si">{</span><span class="n">mds_2</span><span class="o">.</span><span class="n">campus</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Tom is at campus UBC Okanagan.
+Mike is at campus UBC.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Methods,-Class-Methods-&amp;-Static-Methods">
+<a class="anchor" href="#Methods,-Class-Methods-&amp;-Static-Methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Methods, Class Methods &amp; Static Methods<a class="anchor-link" href="#Methods,-Class-Methods-&amp;-Static-Methods"> </a>
+</h3>
+<p>The <code>methods</code> we've seen so far are sometimes calles "regular" <code>methods</code>, they act on an instance of the class (i.e., take <code>self</code> as an argument). We also have <code>class methods</code> that act on the actual class. <code>class methods</code> are often used as "alternative constructors". As an example, let's say that somebody commonly wants to use our class with comma-separated names like the following:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="s1">'Tom,Beuzen'</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Unfortunately, those users can't do this:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_raises-exception">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mds_member</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-39-aba2b627390d&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>mds_member<span class="ansi-blue-fg">(</span>name<span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">TypeError</span>: __init__() missing 1 required positional argument: 'last'</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To use our class, they would need to parse this string into <code>first</code> and <code>last</code>:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">first</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">','</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">last</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Tom
+Beuzen
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Then they could make an instance of our class:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mds_1</span> <span class="o">=</span> <span class="n">mds_member</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If this is a common use case for the users of our code, we don't want them to have to coerce the data every time before using our class. Instead, we can facilitate their use-case with a <code>class method</code>. There are two things we need to do to use a <code>class method</code>:</p>
+<ol>
+<li>Identify our method as <code>class method</code> using the decorator <code>@classmethod</code> (more on decorators in a bit);</li>
+<li>Pass <code>cls</code> instead of <code>self</code> as the first argument.</li>
+</ol>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">mds_member</span><span class="p">:</span>
+
+    <span class="n">role</span> <span class="o">=</span> <span class="s2">"MDS member"</span>
+    <span class="n">campus</span> <span class="o">=</span> <span class="s2">"UBC"</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">first</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="n">last</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"."</span> <span class="o">+</span> <span class="n">last</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"@mds.com"</span>
+        
+    <span class="k">def</span> <span class="nf">full_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">first</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">last</span><span class="si">}</span><span class="s2">"</span>
+    
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_csv</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">csv_name</span><span class="p">):</span>
+        <span class="n">first</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="n">csv_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">','</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now we can use our comma-separated values directly!</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mds_1</span> <span class="o">=</span> <span class="n">mds_member</span><span class="o">.</span><span class="n">from_csv</span><span class="p">(</span><span class="s1">'Tom,Beuzen'</span><span class="p">)</span>
+<span class="n">mds_1</span><span class="o">.</span><span class="n">full_name</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'Tom Beuzen'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There is a third kind of method called a <code>static method</code>. <code>static methods</code> do not operate on either the instance or the class, they are just simple functions. But we might want to include them in our class because they are somehow related to our class. They are defined using the <code>@staticmethod</code> decorator:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">mds_member</span><span class="p">:</span>
+    
+    <span class="n">role</span> <span class="o">=</span> <span class="s2">"MDS member"</span>
+    <span class="n">campus</span> <span class="o">=</span> <span class="s2">"UBC"</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">first</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="n">last</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"."</span> <span class="o">+</span> <span class="n">last</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"@mds.com"</span>
+        
+    <span class="k">def</span> <span class="nf">full_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">first</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">last</span><span class="si">}</span><span class="s2">"</span>
+    
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_csv</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">csv_name</span><span class="p">):</span>
+        <span class="n">first</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="n">csv_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">','</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">)</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">is_quizweek</span><span class="p">(</span><span class="n">week</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">week</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span> <span class="k">else</span> <span class="kc">False</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note that the method <code>is_quizweek()</code> does not accept or use the <code>self</code> argument. But it is still MDS-related, so we might want to include it here.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mds_1</span> <span class="o">=</span> <span class="n">mds_member</span><span class="o">.</span><span class="n">from_csv</span><span class="p">(</span><span class="s1">'Tom,Beuzen'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Is week 1 a quiz week? </span><span class="si">{</span><span class="n">mds_1</span><span class="o">.</span><span class="n">is_quizweek</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Is week 3 a quiz week? </span><span class="si">{</span><span class="n">mds_1</span><span class="o">.</span><span class="n">is_quizweek</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Is week 1 a quiz week? False
+Is week 3 a quiz week? True
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Decorators">
+<a class="anchor" href="#Decorators" aria-hidden="true"><span class="octicon octicon-link"></span></a>Decorators<a class="anchor-link" href="#Decorators"> </a>
+</h3>
+<p>Decorators can be quite a complex topic, you can read more about them <a href="https://realpython.com/primer-on-python-decorators/">here</a>. Briefly, they are what they sounds like, they "decorate" functions/methods with additional functionality. You can think of a decorator as a function that takes another function and adds functionality.</p>
+<p>Let's create a decorator as an example. Recall that functions are data types in Python, they can be passed to other functions. So a decorator simply takes a function as an argument, adds some more functionality to it, and returns a "decorated function" that can be executed.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">original_func</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"I'm the original function!"</span><span class="p">)</span>
+
+<span class="c1"># a decorator</span>
+<span class="k">def</span> <span class="nf">my_decorator</span><span class="p">(</span><span class="n">original_func</span><span class="p">):</span>  <span class="c1"># takes our original function as input</span>
+    
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">():</span>  <span class="c1"># wraps our original function with some extra functionality</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"A decoration before </span><span class="si">{</span><span class="n">original_func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">original_func</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"A decoration after </span><span class="si">{</span><span class="n">original_func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+    
+    <span class="k">return</span> <span class="n">wrapper</span>  <span class="c1"># returns the unexecuted wrapper function which we can can excute later</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <code>my_decorator()</code> function will return to us a function which is the decorated version of our original function.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">my_decorator</span><span class="p">(</span><span class="n">original_func</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;function __main__.my_decorator.&lt;locals&gt;.wrapper()&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As a function was returned to us, we can execute it by adding parentheses:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">my_decorator</span><span class="p">(</span><span class="n">original_func</span><span class="p">)()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>A decoration before original_func.
+I'm the original function!
+A decoration after original_func.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can decorate any arbitrary function with our decorator:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">another_func</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"I'm a different function!"</span><span class="p">)</span>
+
+<span class="n">my_decorator</span><span class="p">(</span><span class="n">another_func</span><span class="p">)()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>A decoration before another_func.
+I'm a different function!
+A decoration after another_func.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The syntax of calling our decorator is not that readable. Instead, we can use the <code>@</code> symbol as "syntactic sugar" to improve readability and reuseability of decorators:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@my_decorator</span>
+<span class="k">def</span> <span class="nf">one_more_func</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"One more function..."</span><span class="p">)</span>
+    
+<span class="n">one_more_func</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>A decoration before one_more_func.
+One more function...
+A decoration after one_more_func.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Okay, let's make something a little more useful. We will create a decorator that times the execution time of any arbitrary function:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>  <span class="c1"># import the time module, we'll learn about imports next chapter</span>
+
+<span class="k">def</span> <span class="nf">timer</span><span class="p">(</span><span class="n">my_function</span><span class="p">):</span>  <span class="c1"># the decorator</span>
+    
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">():</span>  <span class="c1"># the added functionality</span>
+        <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">my_function</span><span class="p">()</span>  <span class="c1"># the original function</span>
+        <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">my_function</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> ran in </span><span class="si">{</span><span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> sec"</span><span class="p">)</span>  <span class="c1"># print the execution time</span>
+        <span class="k">return</span> <span class="n">result</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@timer</span>
+<span class="k">def</span> <span class="nf">silly_function</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10_000_000</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">1_000_000</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> 
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+        
+<span class="n">silly_function</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0
+1000000
+2000000
+3000000
+4000000
+5000000
+6000000
+7000000
+8000000
+9000000
+silly_function ran in 0.601 sec
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Python's built-in decorators like <code>classmethod</code> and <code>staticmethod</code> are coded in C so I'm not showing them here. I don't often create my own decorators, but I use the built-in decorators all the time.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Inheritance-&amp;-Subclasses">
+<a class="anchor" href="#Inheritance-&amp;-Subclasses" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inheritance &amp; Subclasses<a class="anchor-link" href="#Inheritance-&amp;-Subclasses"> </a>
+</h3>
+<p>Just like it sounds, inheritance allows us to "inherit" methods and attributes from another class. So far, we've been working with an <code>mds_member</code> class. But let's get more specific and create a <code>mds_student</code> and <code>mds_instructor</code> class. Recall this was <code>mds_member</code>:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">mds_member</span><span class="p">:</span>
+    
+    <span class="n">role</span> <span class="o">=</span> <span class="s2">"MDS member"</span>
+    <span class="n">campus</span> <span class="o">=</span> <span class="s2">"UBC"</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">first</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="n">last</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"."</span> <span class="o">+</span> <span class="n">last</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"@mds.com"</span>
+        
+    <span class="k">def</span> <span class="nf">full_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">first</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">last</span><span class="si">}</span><span class="s2">"</span>
+    
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_csv</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">csv</span><span class="p">):</span>
+        <span class="n">first</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="n">csv_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">','</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">)</span>
+    
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">is_quizweek</span><span class="p">(</span><span class="n">week</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">week</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span> <span class="k">else</span> <span class="kc">False</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can create an <code>mds_student</code> class that inherits all of the attributes and methods from our <code>mds_member</code> class by  by simply passing the <code>mds_member</code> class as an argument to an <code>mds_student</code> class definition:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">mds_student</span><span class="p">(</span><span class="n">mds_member</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">student_1</span> <span class="o">=</span> <span class="n">mds_student</span><span class="p">(</span><span class="s1">'Craig'</span><span class="p">,</span> <span class="s1">'Smith'</span><span class="p">)</span>
+<span class="n">student_2</span> <span class="o">=</span> <span class="n">mds_student</span><span class="p">(</span><span class="s1">'Megan'</span><span class="p">,</span> <span class="s1">'Scott'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">student_1</span><span class="o">.</span><span class="n">full_name</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">student_2</span><span class="o">.</span><span class="n">full_name</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Craig Smith
+Megan Scott
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>What happened here is that our <code>mds_student</code> instance first looked in the <code>mds_student</code> class for an <code>__init__</code> method, which it didn't find. It then looked for the <code>__init__</code> method in the inherited <code>mds_member</code> class and found something to use! This order is called the "<a href="https://www.python.org/download/releases/2.3/mro/">method resolution order</a>". We can inspect it directly using the <code>help()</code> function:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">mds_student</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Help on class mds_student in module __main__:
+
+class mds_student(mds_member)
+ |  mds_student(first, last)
+ |  
+ |  Method resolution order:
+ |      mds_student
+ |      mds_member
+ |      builtins.object
+ |  
+ |  Methods inherited from mds_member:
+ |  
+ |  __init__(self, first, last)
+ |      Initialize self.  See help(type(self)) for accurate signature.
+ |  
+ |  full_name(self)
+ |  
+ |  ----------------------------------------------------------------------
+ |  Class methods inherited from mds_member:
+ |  
+ |  from_csv(csv) from builtins.type
+ |  
+ |  ----------------------------------------------------------------------
+ |  Static methods inherited from mds_member:
+ |  
+ |  is_quizweek(week)
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data descriptors inherited from mds_member:
+ |  
+ |  __dict__
+ |      dictionary for instance variables (if defined)
+ |  
+ |  __weakref__
+ |      list of weak references to the object (if defined)
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes inherited from mds_member:
+ |  
+ |  campus = 'UBC'
+ |  
+ |  role = 'MDS member'
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Okay, let's fine-tune our <code>mds_student</code> class. The first thing we might want to do is change the role of the student instances to "MDS Student". We can do that by simply adding a <code>class attribute</code> to our <code>mds_student</code> class. Any attributes or methods not "over-ridden" in the <code>mds_student</code> class will just be inherited from the <code>mds_member</code> class.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">mds_student</span><span class="p">(</span><span class="n">mds_member</span><span class="p">):</span>
+    <span class="n">role</span> <span class="o">=</span> <span class="s2">"MDS student"</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">student_1</span> <span class="o">=</span> <span class="n">mds_student</span><span class="p">(</span><span class="s1">'John'</span><span class="p">,</span> <span class="s1">'Smith'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">student_1</span><span class="o">.</span><span class="n">role</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">student_1</span><span class="o">.</span><span class="n">campus</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">student_1</span><span class="o">.</span><span class="n">full_name</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>MDS student
+UBC
+John Smith
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now let's add an <code>instance attribute</code> to our class called <code>grade</code>. You might be tempted to do something like this:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">mds_student</span><span class="p">(</span><span class="n">mds_member</span><span class="p">):</span>
+    <span class="n">role</span> <span class="o">=</span> <span class="s2">"MDS student"</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">grade</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">first</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="n">last</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"."</span> <span class="o">+</span> <span class="n">last</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"@mds.com"</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grade</span> <span class="o">=</span> <span class="n">grade</span>
+        
+<span class="n">student_1</span> <span class="o">=</span> <span class="n">mds_student</span><span class="p">(</span><span class="s1">'John'</span><span class="p">,</span> <span class="s1">'Smith'</span><span class="p">,</span> <span class="s1">'B+'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">student_1</span><span class="o">.</span><span class="n">email</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">student_1</span><span class="o">.</span><span class="n">grade</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>john.smith@mds.com
+B+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>But this is not DRY code, remember that we've already typed most of this in our <code>mds_member</code> class. So what we can do is let the <code>mds_member</code> class handle our <code>first</code> and <code>last</code> argument and we'll just worry about <code>grade</code>. We can do this easily with the <code>super()</code> function. Things can get pretty complicated with <code>super()</code>, you can read more <a href="https://realpython.com/python-super/#an-overview-of-pythons-super-function">here</a>, but all you really need to know is that <code>super()</code> allows you to inherit attributes/methods from other classes.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">mds_student</span><span class="p">(</span><span class="n">mds_member</span><span class="p">):</span>
+    <span class="n">role</span> <span class="o">=</span> <span class="s2">"MDS student"</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">grade</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grade</span> <span class="o">=</span> <span class="n">grade</span>
+        
+<span class="n">student_1</span> <span class="o">=</span> <span class="n">mds_student</span><span class="p">(</span><span class="s1">'John'</span><span class="p">,</span> <span class="s1">'Smith'</span><span class="p">,</span> <span class="s1">'B+'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">student_1</span><span class="o">.</span><span class="n">email</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">student_1</span><span class="o">.</span><span class="n">grade</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>john.smith@mds.com
+B+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Amazing! Hopefully you can start to see how powerful inheritance can be. Let's create another subclass called <code>mds_instructor</code>, which has two new methods <code>add_course()</code> and <code>remove_course()</code>.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">mds_instructor</span><span class="p">(</span><span class="n">mds_member</span><span class="p">):</span>
+    <span class="n">role</span> <span class="o">=</span> <span class="s2">"MDS instructor"</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">courses</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">courses</span> <span class="o">=</span> <span class="p">([]</span> <span class="k">if</span> <span class="n">courses</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">courses</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">add_course</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">course</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">courses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">course</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">remove_course</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">course</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">courses</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">course</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">instructor_1</span> <span class="o">=</span> <span class="n">mds_instructor</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">,</span> <span class="s1">'Beuzen'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'511'</span><span class="p">,</span> <span class="s1">'561'</span><span class="p">,</span> <span class="s1">'513'</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">instructor_1</span><span class="o">.</span><span class="n">full_name</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">instructor_1</span><span class="o">.</span><span class="n">courses</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Tom Beuzen
+['511', '561', '513']
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">instructor_1</span><span class="o">.</span><span class="n">add_course</span><span class="p">(</span><span class="s1">'591'</span><span class="p">)</span>
+<span class="n">instructor_1</span><span class="o">.</span><span class="n">remove_course</span><span class="p">(</span><span class="s1">'513'</span><span class="p">)</span>
+<span class="n">instructor_1</span><span class="o">.</span><span class="n">courses</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>['511', '561', '591']</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Getters/Setters/Deleters">
+<a class="anchor" href="#Getters/Setters/Deleters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getters/Setters/Deleters<a class="anchor-link" href="#Getters/Setters/Deleters"> </a>
+</h3>
+<p>There's one more import topic to talk about with Python classes and that is getters/setters/deleters. The necessity for these actions is best illustrated by example. Here's a stripped down version of the <code>mds_member</code> class from earlier:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">mds_member</span><span class="p">:</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">first</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="n">last</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"."</span> <span class="o">+</span> <span class="n">last</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"@mds.com"</span>
+        
+    <span class="k">def</span> <span class="nf">full_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">first</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">last</span><span class="si">}</span><span class="s2">"</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mds_1</span> <span class="o">=</span> <span class="n">mds_member</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">,</span> <span class="s1">'Beuzen'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">first</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">last</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">email</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">full_name</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Tom
+Beuzen
+tom.beuzen@mds.com
+Tom Beuzen
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Imagine that I mis-spelled the name of this class instance and wanted to correct it. Watch what happens...</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mds_1</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="s1">'Tomas'</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">first</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">last</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">email</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">full_name</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Tomas
+Beuzen
+tom.beuzen@mds.com
+Tomas Beuzen
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Uh oh... the email didn't update with the new first name! We didn't have this problem with the <code>full_name()</code> method because it just calls the current <code>first</code> and <code>last</code> name. You might think that the best thing to do here is to create a method for <code>email()</code> like we have for <code>full_name()</code>. But this is bad coding for a variety of reasons, for example it means that users of your code will have to change every call to the <code>email</code> attribute to a call to the <code>email()</code> method. We'd call that a breaking change to our software and we want to avoid that where possible. What we can do instead, is define our <code>email</code> like a method, but keep it as an attribute using the <code>@property</code> decorator.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">mds_member</span><span class="p">:</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">first</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="n">last</span>
+        
+    <span class="k">def</span> <span class="nf">full_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">first</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">last</span><span class="si">}</span><span class="s2">"</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">email</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"."</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"@mds.com"</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mds_1</span> <span class="o">=</span> <span class="n">mds_member</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">,</span> <span class="s1">'Beuzen'</span><span class="p">)</span>
+<span class="n">mds_1</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="s1">'Tomas'</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">first</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">last</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">email</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">full_name</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Tomas
+Beuzen
+tomas.beuzen@mds.com
+Tomas Beuzen
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We could do the same with the <code>full_name()</code> method if we wanted too...</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">mds_member</span><span class="p">:</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">first</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="n">last</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">full_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">first</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">last</span><span class="si">}</span><span class="s2">"</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">email</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"."</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"@mds.com"</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mds_1</span> <span class="o">=</span> <span class="n">mds_member</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">,</span> <span class="s1">'Beuzen'</span><span class="p">)</span>
+<span class="n">mds_1</span><span class="o">.</span><span class="n">full_name</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'Tom Beuzen'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>But what happens if we instead want to make a change to the full name now?</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_raises-exception">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mds_1</span><span class="o">.</span><span class="n">full_name</span> <span class="o">=</span> <span class="s1">'Thomas Beuzen'</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">AttributeError</span>                            Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-71-74e4ce79e805&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>mds_1<span class="ansi-blue-fg">.</span>full_name <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">'Thomas Beuzen'</span>
+
+<span class="ansi-red-fg">AttributeError</span>: can't set attribute</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We get an error... Our class instance doesn't know what to do with the value it was passed. Ideally, we'd like our class instance to use this full name information to update <code>self.first</code> and <code>self.last</code>. To handle this action, we need a <code>setter</code>, defined using the decorator <code>@&lt;attribute&gt;.setter</code>:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">mds_member</span><span class="p">:</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">first</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="n">last</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">full_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">first</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">last</span><span class="si">}</span><span class="s2">"</span>
+    
+    <span class="nd">@full_name</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">full_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">first</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">first</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="n">last</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">email</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"."</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"@mds.com"</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mds_1</span> <span class="o">=</span> <span class="n">mds_member</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">,</span> <span class="s1">'Beuzen'</span><span class="p">)</span>
+<span class="n">mds_1</span><span class="o">.</span><span class="n">full_name</span> <span class="o">=</span> <span class="s1">'Thomas Beuzen'</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">first</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">last</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">email</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">full_name</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Thomas
+Beuzen
+thomas.beuzen@mds.com
+Thomas Beuzen
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Almost there! We've talked about getting information and setting information, but what about deletting information? This is typically used to do some clean up and is defined with the <code>@&lt;attribute&gt;.deleter</code> decorator. I rarely use this method but I want you to see it:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">mds_member</span><span class="p">:</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">first</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="n">last</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">full_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">first</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">last</span><span class="si">}</span><span class="s2">"</span>
+    
+    <span class="nd">@full_name</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">full_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">first</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">first</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="n">last</span>
+        
+    <span class="nd">@full_name</span><span class="o">.</span><span class="n">deleter</span>
+    <span class="k">def</span> <span class="nf">full_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'Name deleted!'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="kc">None</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">email</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"."</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"@mds.com"</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mds_1</span> <span class="o">=</span> <span class="n">mds_member</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">,</span> <span class="s1">'Beuzen'</span><span class="p">)</span>
+<span class="nb">delattr</span><span class="p">(</span><span class="n">mds_1</span><span class="p">,</span> <span class="s2">"full_name"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">first</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mds_1</span><span class="o">.</span><span class="n">last</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Name deleted!
+None
+None
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Congrats for making it to the end, that was a lot of content and some tough topics to get through, so well done!!</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="millermuttu/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blog/jupyter/python/data%20science/programming/2022/07/26/chapter3-tests-classes.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Data science blogging - All opnions are personal only</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/millermuttu" target="_blank" title="millermuttu"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/mallikarjunvsaj" target="_blank" title="mallikarjunvsaj"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

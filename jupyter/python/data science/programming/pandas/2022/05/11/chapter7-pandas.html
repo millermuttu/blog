@@ -1,0 +1,6616 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Data science revision - chapter 7 | Mallikarjun Sajjan’s Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Data science revision - chapter 7" />
+<meta name="author" content="Mallikarju Sajjan" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Introduction to Pandas" />
+<meta property="og:description" content="Introduction to Pandas" />
+<link rel="canonical" href="https://millermuttu.github.io/blog/jupyter/python/data%20science/programming/pandas/2022/05/11/chapter7-pandas.html" />
+<meta property="og:url" content="https://millermuttu.github.io/blog/jupyter/python/data%20science/programming/pandas/2022/05/11/chapter7-pandas.html" />
+<meta property="og:site_name" content="Mallikarjun Sajjan’s Blog" />
+<meta property="og:image" content="https://millermuttu.github.io/blog/images/DS.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-05-11T00:00:00-05:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://millermuttu.github.io/blog/images/DS.png" />
+<meta property="twitter:title" content="Data science revision - chapter 7" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Mallikarju Sajjan"},"dateModified":"2022-05-11T00:00:00-05:00","datePublished":"2022-05-11T00:00:00-05:00","description":"Introduction to Pandas","headline":"Data science revision - chapter 7","image":"https://millermuttu.github.io/blog/images/DS.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://millermuttu.github.io/blog/jupyter/python/data%20science/programming/pandas/2022/05/11/chapter7-pandas.html"},"url":"https://millermuttu.github.io/blog/jupyter/python/data%20science/programming/pandas/2022/05/11/chapter7-pandas.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://millermuttu.github.io/blog/feed.xml" title="Mallikarjun Sajjan's Blog" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" /><script src="https://hypothes.is/embed.js" async></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Mallikarjun Sajjan&#39;s Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Data science revision - chapter 7</h1><p class="page-description">Introduction to Pandas</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-05-11T00:00:00-05:00" itemprop="datePublished">
+        May 11, 2022
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">Mallikarju Sajjan</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      30 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#jupyter">jupyter</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#python">python</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#data science">data science</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#programming">programming</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#pandas">pandas</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/millermuttu/blog/tree/master/_notebooks/2022-05-11-chapter7-pandas.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/millermuttu/blog/master?filepath=_notebooks%2F2022-05-11-chapter7-pandas.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/millermuttu/blog/blob/master/_notebooks/2022-05-11-chapter7-pandas.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+          <div class="px-2">
+  <a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Fmillermuttu%2Fblog%2Fblob%2Fmaster%2F_notebooks%2F2022-05-11-chapter7-pandas.ipynb" target="_blank">
+      <img class="notebook-badge-image" src="/blog/assets/badges/deepnote.svg" alt="Launch in Deepnote"/>
+  </a>
+</div>
+
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#Chapter-7:-Introduction-to-Pandas">Chapter 7: Introduction to Pandas </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#chapter-outline">Chapter Outline</a></li>
+<li class="toc-entry toc-h2"><a href="#Chapter-Learning-Objectives">Chapter Learning Objectives </a></li>
+<li class="toc-entry toc-h2"><a href="#1.-Introduction-to-Pandas">1. Introduction to Pandas </a></li>
+<li class="toc-entry toc-h2"><a href="#2.-Pandas-Series">2. Pandas Series </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#What-are-Series?">What are Series? </a></li>
+<li class="toc-entry toc-h3"><a href="#Creating-Series">Creating Series </a></li>
+<li class="toc-entry toc-h3"><a href="#Series-Characteristics">Series Characteristics </a></li>
+<li class="toc-entry toc-h3"><a href="#Indexing-and-Slicing-Series">Indexing and Slicing Series </a></li>
+<li class="toc-entry toc-h3"><a href="#Series-Operations">Series Operations </a></li>
+<li class="toc-entry toc-h3"><a href="#Data-Types">Data Types </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#3.-Pandas-DataFrames">3. Pandas DataFrames </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#What-are-DataFrames?">What are DataFrames? </a></li>
+<li class="toc-entry toc-h3"><a href="#Creating-DataFrames">Creating DataFrames </a></li>
+<li class="toc-entry toc-h3"><a href="#Indexing-and-Slicing-DataFrames">Indexing and Slicing DataFrames </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Indexing-with-[]">Indexing with [] </a></li>
+<li class="toc-entry toc-h4"><a href="#Indexing-with-.loc-and-.iloc">Indexing with .loc and .iloc </a></li>
+<li class="toc-entry toc-h4"><a href="#Boolean-indexing">Boolean indexing </a></li>
+<li class="toc-entry toc-h4"><a href="#Indexing-with-.query()">Indexing with .query() </a></li>
+<li class="toc-entry toc-h4"><a href="#Indexing-cheatsheet">Indexing cheatsheet </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Reading/Writing-Data-From-External-Sources">Reading/Writing Data From External Sources </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#.csv-files">.csv files </a></li>
+<li class="toc-entry toc-h4"><a href="#url">url </a></li>
+<li class="toc-entry toc-h4"><a href="#Other">Other </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Common-DataFrame-Operations">Common DataFrame Operations </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#4.-Why-ndarrays-and-Series-and-DataFrames?">4. Why ndarrays and Series and DataFrames? </a></li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2022-05-11-chapter7-pandas.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="/blog/images/copied_from_nb/../images/banner.png" alt=""></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Chapter-7:-Introduction-to-Pandas">
+<a class="anchor" href="#Chapter-7:-Introduction-to-Pandas" aria-hidden="true"><span class="octicon octicon-link"></span></a>Chapter 7: Introduction to Pandas<a class="anchor-link" href="#Chapter-7:-Introduction-to-Pandas"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<h2>
+<a class="anchor" href="#chapter-outline" aria-hidden="true"><span class="octicon octicon-link"></span></a>Chapter Outline<span class="tocSkip"></span>
+</h2>
+<p></p>
+<hr>
+<div class="toc"><ul class="toc-item">
+<li><span><a href="#1.-Introduction-to-Pandas" data-toc-modified-id="1.-Introduction-to-Pandas-1">1. Introduction to Pandas</a></span></li>
+<li><span><a href="#2.-Pandas-Series" data-toc-modified-id="2.-Pandas-Series-2">2. Pandas Series</a></span></li>
+<li><span><a href="#3.-Pandas-DataFrames" data-toc-modified-id="3.-Pandas-DataFrames-3">3. Pandas DataFrames</a></span></li>
+<li><span><a href="#4.-Why-ndarrays-and-Series-and-DataFrames?" data-toc-modified-id="4.-Why-ndarrays-and-Series-and-DataFrames?-4">4. Why ndarrays and Series and DataFrames?</a></span></li>
+</ul></div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Chapter-Learning-Objectives">
+<a class="anchor" href="#Chapter-Learning-Objectives" aria-hidden="true"><span class="octicon octicon-link"></span></a>Chapter Learning Objectives<a class="anchor-link" href="#Chapter-Learning-Objectives"> </a>
+</h2>
+<hr>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>Create Pandas series with <code>pd.Series()</code> and Pandas dataframe with <code>pd.DataFrame()</code>
+</li>
+<li>Be able to access values from a Series/DataFrame by indexing, slicing and boolean indexing using notation such as <code>df[]</code>, <code>df.loc[]</code>, <code>df.iloc[]</code>, <code>df.query[]</code>
+</li>
+<li>Perform basic arithmetic operations between two series and anticipate the result.</li>
+<li>Describe how Pandas assigns dtypes to Series and what the <code>object</code> dtype is</li>
+<li>Read a standard .csv file from a local path or url using Pandas <code>pd.read_csv()</code>.</li>
+<li>Explain the relationship and differences between <code>np.ndarray</code>, <code>pd.Series</code> and <code>pd.DataFrame</code> objects in Python.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="1.-Introduction-to-Pandas">
+<a class="anchor" href="#1.-Introduction-to-Pandas" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Introduction to Pandas<a class="anchor-link" href="#1.-Introduction-to-Pandas"> </a>
+</h2>
+<hr>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="/blog/images/copied_from_nb/img/chapter7/pandas.png" alt=""></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Pandas is most popular Python library for tabular data structures. You can think of Pandas as an extremely powerful version of Excel (but free and with a lot more features!)</p>
+<p>Pandas can be installed using <code>conda</code>:</p>
+
+<pre><code>conda install pandas</code></pre>
+<p>We usually import pandas with the alias <code>pd</code>. You'll see these two imports at the top of most data science workflows:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="2.-Pandas-Series">
+<a class="anchor" href="#2.-Pandas-Series" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Pandas Series<a class="anchor-link" href="#2.-Pandas-Series"> </a>
+</h2>
+<hr>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="What-are-Series?">
+<a class="anchor" href="#What-are-Series?" aria-hidden="true"><span class="octicon octicon-link"></span></a>What are Series?<a class="anchor-link" href="#What-are-Series?"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>A Series is like a NumPy array but with labels. They are strictly 1-dimensional and can contain any data type (integers, strings, floats, objects, etc), including a mix of them. Series can be created from a scalar, a list, ndarray or dictionary using <code>pd.Series()</code> (<strong>note the captial "S"</strong>). Here are some example series:</p>
+<p><img src="/blog/images/copied_from_nb/img/chapter7/series.png" alt=""></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Creating-Series">
+<a class="anchor" href="#Creating-Series" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating Series<a class="anchor-link" href="#Creating-Series"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>By default, series are labelled with indices starting from 0. For example:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0    -5.0
+1     1.3
+2    21.0
+3     6.0
+4     3.0
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>But you can add a custom index:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+          <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">,</span> <span class="s1">'d'</span><span class="p">,</span> <span class="s1">'e'</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>a    -5.0
+b     1.3
+c    21.0
+d     6.0
+e     3.0
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can create a Series from a dictionary:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'a'</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">:</span> <span class="mi">30</span><span class="p">})</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>a    10
+b    20
+c    30
+dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Or from an ndarray:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0   -0.428301
+1   -0.104959
+2    0.170835
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Or even a scalar:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="mf">3.141</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0    3.141
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="mf">3.141</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">'a'</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>a    3.141
+b    3.141
+c    3.141
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Series-Characteristics">
+<a class="anchor" href="#Series-Characteristics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Series Characteristics<a class="anchor-link" href="#Series-Characteristics"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Series can be given a <code>name</code> attribute. I almost never use this but it might come up sometimes:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s1">'random_series'</span><span class="p">)</span>
+<span class="n">s</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0   -1.363190
+1    0.425801
+2   -0.048966
+3   -0.298172
+4    1.899199
+Name: random_series, dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">name</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'random_series'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">"another_name"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0   -1.363190
+1    0.425801
+2   -0.048966
+3   -0.298172
+4    1.899199
+Name: another_name, dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can access the index labels of your series using the <code>.index</code> attribute:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>RangeIndex(start=0, stop=5, step=1)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can access the underlying data array using <code>.to_numpy()</code>:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([-1.36319006,  0.42580052, -0.04896627, -0.29817227,  1.89919866])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s2">"b"</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([list([1, 2, 3]), 'b', 1], dtype=object)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Indexing-and-Slicing-Series">
+<a class="anchor" href="#Indexing-and-Slicing-Series" aria-hidden="true"><span class="octicon octicon-link"></span></a>Indexing and Slicing Series<a class="anchor-link" href="#Indexing-and-Slicing-Series"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Series are very much like ndarrays (in fact, series can be passed to most NumPy functions!). They can be indexed using square brackets <code>[ ]</code> and sliced using colon <code>:</code> notation:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>
+              <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'A'</span><span class="p">,</span> <span class="s1">'B'</span><span class="p">,</span> <span class="s1">'C'</span><span class="p">,</span> <span class="s1">'D'</span><span class="p">,</span> <span class="s1">'E'</span><span class="p">])</span>
+<span class="n">s</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>A    0
+B    1
+C    2
+D    3
+E    4
+dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>B    1
+C    2
+D    3
+dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>A    0
+B    1
+C    2
+dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note above how array-based indexing and slicing also returns the series index.</p>
+<p>Series are also like dictionaries, in that we can access values using index labels:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s</span><span class="p">[</span><span class="s2">"A"</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s</span><span class="p">[[</span><span class="s2">"B"</span><span class="p">,</span> <span class="s2">"D"</span><span class="p">,</span> <span class="s2">"C"</span><span class="p">]]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>B    1
+D    3
+C    2
+dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s</span><span class="p">[</span><span class="s2">"A"</span><span class="p">:</span><span class="s2">"C"</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>A    0
+B    1
+C    2
+dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="s2">"A"</span> <span class="ow">in</span> <span class="n">s</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>True</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="s2">"Z"</span> <span class="ow">in</span> <span class="n">s</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>False</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Series do allow for non-unique indexing, but <strong>be careful</strong> because indexing operations won't return unique values:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>
+              <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"A"</span><span class="p">,</span> <span class="s2">"A"</span><span class="p">,</span> <span class="s2">"A"</span><span class="p">,</span> <span class="s2">"B"</span><span class="p">,</span> <span class="s2">"C"</span><span class="p">])</span>
+<span class="n">x</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>A    0
+A    1
+A    2
+B    3
+C    4
+dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span><span class="p">[</span><span class="s2">"A"</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>A    0
+A    1
+A    2
+dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Finally, we can also do boolean indexing with series:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s</span><span class="p">[</span><span class="n">s</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>B    1
+C    2
+D    3
+E    4
+dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s</span><span class="p">[</span><span class="n">s</span> <span class="o">&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">mean</span><span class="p">()]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>D    3
+E    4
+dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="n">s</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>A     True
+B    False
+C     True
+D     True
+E     True
+dtype: bool</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Series-Operations">
+<a class="anchor" href="#Series-Operations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Series Operations<a class="anchor-link" href="#Series-Operations"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Unlike ndarrays operations between Series (+, -, /, *) align values based on their <strong>LABELS</strong> (not their position in the structure). The resulting index will be the <strong><em>sorted union</em></strong> of the two indexes. This gives you the flexibility to run operations on series regardless of their labels.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span>
+               <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"A"</span><span class="p">,</span> <span class="s2">"B"</span><span class="p">,</span> <span class="s2">"C"</span><span class="p">,</span> <span class="s2">"D"</span><span class="p">])</span>
+<span class="n">s1</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>A    0
+B    1
+C    2
+D    3
+dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">14</span><span class="p">),</span>
+               <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"B"</span><span class="p">,</span> <span class="s2">"C"</span><span class="p">,</span> <span class="s2">"D"</span><span class="p">,</span> <span class="s2">"E"</span><span class="p">])</span>
+<span class="n">s2</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>B    10
+C    11
+D    12
+E    13
+dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s1</span> <span class="o">+</span> <span class="n">s2</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>A     NaN
+B    11.0
+C    13.0
+D    15.0
+E     NaN
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As you can see above, indices that match will be operated on. Indices that don't match will appear in the product but with <code>NaN</code> values:</p>
+<p><img src="/blog/images/copied_from_nb/img/chapter7/series_addition.png" alt=""></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can also perform standard operations on a series, like multiplying or squaring. NumPy also accepts series as an argument to most functions because series are built off numpy arrays (more on that later):</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s1</span> <span class="o">**</span> <span class="mi">2</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>A    0
+B    1
+C    4
+D    9
+dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>A     1.000000
+B     2.718282
+C     7.389056
+D    20.085537
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Finally, just like arrays, series have many built-in methods for various operations. You can find them all by running <code>help(pd.Series)</code>:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">([</span><span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">_</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"_"</span><span class="p">)])</span>  <span class="c1"># print all common methods</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>['T', 'abs', 'add', 'add_prefix', 'add_suffix', 'agg', 'aggregate', 'align', 'all', 'any', 'append', 'apply', 'argmax', 'argmin', 'argsort', 'array', 'asfreq', 'asof', 'astype', 'at', 'at_time', 'attrs', 'autocorr', 'axes', 'backfill', 'between', 'between_time', 'bfill', 'bool', 'cat', 'clip', 'combine', 'combine_first', 'compare', 'convert_dtypes', 'copy', 'corr', 'count', 'cov', 'cummax', 'cummin', 'cumprod', 'cumsum', 'describe', 'diff', 'div', 'divide', 'divmod', 'dot', 'drop', 'drop_duplicates', 'droplevel', 'dropna', 'dt', 'dtype', 'dtypes', 'duplicated', 'empty', 'eq', 'equals', 'ewm', 'expanding', 'explode', 'factorize', 'ffill', 'fillna', 'filter', 'first', 'first_valid_index', 'floordiv', 'ge', 'get', 'groupby', 'gt', 'hasnans', 'head', 'hist', 'iat', 'idxmax', 'idxmin', 'iloc', 'index', 'infer_objects', 'interpolate', 'is_monotonic', 'is_monotonic_decreasing', 'is_monotonic_increasing', 'is_unique', 'isin', 'isna', 'isnull', 'item', 'items', 'iteritems', 'keys', 'kurt', 'kurtosis', 'last', 'last_valid_index', 'le', 'loc', 'lt', 'mad', 'map', 'mask', 'max', 'mean', 'median', 'memory_usage', 'min', 'mod', 'mode', 'mul', 'multiply', 'name', 'nbytes', 'ndim', 'ne', 'nlargest', 'notna', 'notnull', 'nsmallest', 'nunique', 'pad', 'pct_change', 'pipe', 'plot', 'pop', 'pow', 'prod', 'product', 'quantile', 'radd', 'rank', 'ravel', 'rdiv', 'rdivmod', 'reindex', 'reindex_like', 'rename', 'rename_axis', 'reorder_levels', 'repeat', 'replace', 'resample', 'reset_index', 'rfloordiv', 'rmod', 'rmul', 'rolling', 'round', 'rpow', 'rsub', 'rtruediv', 'sample', 'searchsorted', 'sem', 'set_axis', 'shape', 'shift', 'size', 'skew', 'slice_shift', 'sort_index', 'sort_values', 'sparse', 'squeeze', 'std', 'str', 'sub', 'subtract', 'sum', 'swapaxes', 'swaplevel', 'tail', 'take', 'to_clipboard', 'to_csv', 'to_dict', 'to_excel', 'to_frame', 'to_hdf', 'to_json', 'to_latex', 'to_list', 'to_markdown', 'to_numpy', 'to_period', 'to_pickle', 'to_sql', 'to_string', 'to_timestamp', 'to_xarray', 'tolist', 'transform', 'transpose', 'truediv', 'truncate', 'tshift', 'tz_convert', 'tz_localize', 'unique', 'unstack', 'update', 'value_counts', 'values', 'var', 'view', 'where', 'xs']
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s1</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>A    0
+B    1
+C    2
+D    3
+dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s1</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1.5</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s1</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>6</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s1</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>A    0.0
+B    1.0
+C    2.0
+D    3.0
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>"Chaining"</strong> operations together is also common with pandas:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s1</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mf">3.141</span><span class="p">)</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>22</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Data-Types">
+<a class="anchor" href="#Data-Types" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Types<a class="anchor-link" href="#Data-Types"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Series can hold all the data types (<code>dtypes</code>) you're used to, e.g., <code>int</code>, <code>float</code>, <code>bool</code>, etc. There are a few other special data types too (<code>object</code>, <code>DateTime</code> and <code>Categorical</code>) which we'll talk about in this and later chapters. You can always read more about pandas dtypes <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/basics.html#dtypes">in the documentation too</a>. For example, here's a series of <code>dtype</code> int64:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">x</span><span class="o">.</span><span class="n">dtype</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>dtype('int64')</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The dtype "<code>object</code>" is used for series of strings or mixed data. Pandas is <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.StringDtype.html#pandas.StringDtype">currently experimenting</a> with a dedicated string dtype <code>StringDtype</code>, but it is still in testing.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">'A'</span><span class="p">,</span> <span class="s1">'B'</span><span class="p">])</span>
+<span class="n">x</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0    A
+1    B
+dtype: object</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">'A'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="s2">"I"</span><span class="p">,</span> <span class="s2">"AM"</span><span class="p">,</span> <span class="s2">"A"</span><span class="p">,</span> <span class="s2">"LIST"</span><span class="p">]])</span>
+<span class="n">x</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0                   A
+1                   1
+2    [I, AM, A, LIST]
+dtype: object</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>While flexible, it is recommended to avoid the use of <code>object</code> dtypes because of higher memory requirements. Essentially, in an <code>object</code> dtype series, every single element stores information about its individual dtype. We can inspect the dtypes of all the elements in a mixed series in several ways, below I'll use the <code>map</code> method:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">type</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0     &lt;class 'str'&gt;
+1     &lt;class 'int'&gt;
+2    &lt;class 'list'&gt;
+dtype: object</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can see that each object in our series has a different dtype. This comes at a cost. Compare the <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.memory_usage.html">memory usage</a> of the series below:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"x1 dtype: </span><span class="si">{</span><span class="n">x1</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"x1 memory usage: </span><span class="si">{</span><span class="n">x1</span><span class="o">.</span><span class="n">memory_usage</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="si">}</span><span class="s2"> bytes"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">"3"</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"x2 dtype: </span><span class="si">{</span><span class="n">x2</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"x2 memory usage: </span><span class="si">{</span><span class="n">x2</span><span class="o">.</span><span class="n">memory_usage</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="si">}</span><span class="s2"> bytes"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span>
+<span class="n">x3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">"3"</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'int8'</span><span class="p">)</span>  <span class="c1"># coerce the object series to int8</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"x3 dtype: </span><span class="si">{</span><span class="n">x3</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"x3 memory usage: </span><span class="si">{</span><span class="n">x3</span><span class="o">.</span><span class="n">memory_usage</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="si">}</span><span class="s2"> bytes"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>x1 dtype: int64
+x1 memory usage: 152 bytes
+
+x2 dtype: object
+x2 memory usage: 258 bytes
+
+x3 dtype: int8
+x3 memory usage: 131 bytes
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In summary, try to use uniform dtypes where possible - they are more memory efficient!</p>
+<p>One more gotcha, <code>NaN</code> (frequently used to represent missing values in data) is a float:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>float</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This can be problematic if you have a series of integers and one missing value, because Pandas will cast the whole series to a float:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0    1.0
+1    2.0
+2    3.0
+3    NaN
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Only recently, Pandas has implemented a "<a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/integer_na.html">nullable integer dtype</a>", which can handle <code>NaN</code> in an integer series without affecting the <code>dtype</code>. Note the captial "I" in the type below, differentiating it from numpy's <code>int64</code> dtype:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'Int64'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0       1
+1       2
+2       3
+3    &lt;NA&gt;
+dtype: Int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This is not the default in Pandas yet and functionality of this new feature is still subject to change.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="3.-Pandas-DataFrames">
+<a class="anchor" href="#3.-Pandas-DataFrames" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Pandas DataFrames<a class="anchor-link" href="#3.-Pandas-DataFrames"> </a>
+</h2>
+<hr>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="What-are-DataFrames?">
+<a class="anchor" href="#What-are-DataFrames?" aria-hidden="true"><span class="octicon octicon-link"></span></a>What are DataFrames?<a class="anchor-link" href="#What-are-DataFrames?"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Pandas DataFrames are you're new best friend. They are like the Excel spreadsheets you may be used to. DataFrames are really just Series stuck together! Think of a DataFrame as a dictionary of series, with the "keys" being the column labels and the "values" being the series data:</p>
+<p><img src="/blog/images/copied_from_nb/img/chapter7/dataframe.png" alt=""></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Creating-DataFrames">
+<a class="anchor" href="#Creating-DataFrames" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating DataFrames<a class="anchor-link" href="#Creating-DataFrames"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Dataframes can be created using <code>pd.DataFrame()</code> (note the capital "D" and "F"). Like series, index and column labels of dataframes are labelled starting from 0 by default:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4</td>
+      <td>5</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7</td>
+      <td>8</td>
+      <td>9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can use the <code>index</code> and <code>columns</code> arguments to give them labels:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]],</span>
+             <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"R1"</span><span class="p">,</span> <span class="s2">"R2"</span><span class="p">,</span> <span class="s2">"R3"</span><span class="p">],</span>
+             <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"C1"</span><span class="p">,</span> <span class="s2">"C2"</span><span class="p">,</span> <span class="s2">"C3"</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>C1</th>
+      <th>C2</th>
+      <th>C3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>R1</th>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>R2</th>
+      <td>4</td>
+      <td>5</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>R3</th>
+      <td>7</td>
+      <td>8</td>
+      <td>9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There are so many ways to create dataframes. I most often create them from dictionaries or ndarrays:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">"C1"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+              <span class="s2">"C2"</span><span class="p">:</span> <span class="p">[</span><span class="s1">'A'</span><span class="p">,</span> <span class="s1">'B'</span><span class="p">,</span> <span class="s1">'C'</span><span class="p">]},</span>
+             <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">"R1"</span><span class="p">,</span> <span class="s2">"R2"</span><span class="p">,</span> <span class="s2">"R3"</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>C1</th>
+      <th>C2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>R1</th>
+      <td>1</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>R2</th>
+      <td>2</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <th>R3</th>
+      <td>3</td>
+      <td>C</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+             <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">"row_</span><span class="si">{</span><span class="n">_</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)],</span>
+             <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">"col_</span><span class="si">{</span><span class="n">_</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>col_1</th>
+      <th>col_2</th>
+      <th>col_3</th>
+      <th>col_4</th>
+      <th>col_5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>row_1</th>
+      <td>-1.511598</td>
+      <td>-1.073875</td>
+      <td>2.990474</td>
+      <td>2.408082</td>
+      <td>0.101569</td>
+    </tr>
+    <tr>
+      <th>row_2</th>
+      <td>0.767246</td>
+      <td>0.423030</td>
+      <td>-0.135450</td>
+      <td>0.369545</td>
+      <td>0.761417</td>
+    </tr>
+    <tr>
+      <th>row_3</th>
+      <td>0.714677</td>
+      <td>1.489430</td>
+      <td>0.843088</td>
+      <td>-1.284666</td>
+      <td>1.310033</td>
+    </tr>
+    <tr>
+      <th>row_4</th>
+      <td>-0.513656</td>
+      <td>0.539531</td>
+      <td>0.207057</td>
+      <td>0.425888</td>
+      <td>0.481794</td>
+    </tr>
+    <tr>
+      <th>row_5</th>
+      <td>-1.361988</td>
+      <td>-0.479158</td>
+      <td>0.158281</td>
+      <td>-0.196813</td>
+      <td>0.136745</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="s1">'Tom'</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="s1">'Mike'</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span> <span class="p">[</span><span class="s1">'Tiffany'</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Tom</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mike</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Tiffany</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here's a table of the main ways you can create dataframes (see the <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/dsintro.html#dataframe">Pandas documentation</a> for more):</p>
+<table>
+<thead>
+<tr>
+<th>Create DataFrame from</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lists of lists</td>
+<td><code>pd.DataFrame([['Tom', 7], ['Mike', 15], ['Tiffany', 3]])</code></td>
+</tr>
+<tr>
+<td>ndarray</td>
+<td><code>pd.DataFrame(np.array([['Tom', 7], ['Mike', 15], ['Tiffany', 3]]))</code></td>
+</tr>
+<tr>
+<td>Dictionary</td>
+<td><code>pd.DataFrame({"Name": ['Tom', 'Mike', 'Tiffany'], "Number": [7, 15, 3]})</code></td>
+</tr>
+<tr>
+<td>List of tuples</td>
+<td><code>pd.DataFrame(zip(['Tom', 'Mike', 'Tiffany'], [7, 15, 3]))</code></td>
+</tr>
+<tr>
+<td>Series</td>
+<td><code>pd.DataFrame({"Name": pd.Series(['Tom', 'Mike', 'Tiffany']), "Number": pd.Series([7, 15, 3])})</code></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Indexing-and-Slicing-DataFrames">
+<a class="anchor" href="#Indexing-and-Slicing-DataFrames" aria-hidden="true"><span class="octicon octicon-link"></span></a>Indexing and Slicing DataFrames<a class="anchor-link" href="#Indexing-and-Slicing-DataFrames"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There are several main ways to select data from a DataFrame:</p>
+<ol>
+<li><code>[]</code></li>
+<li><code>.loc[]</code></li>
+<li><code>.iloc[]</code></li>
+<li>Boolean indexing</li>
+<li><code>.query()</code></li>
+</ol>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">"Name"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"Tom"</span><span class="p">,</span> <span class="s2">"Mike"</span><span class="p">,</span> <span class="s2">"Tiffany"</span><span class="p">],</span>
+                   <span class="s2">"Language"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"Python"</span><span class="p">,</span> <span class="s2">"Python"</span><span class="p">,</span> <span class="s2">"R"</span><span class="p">],</span>
+                   <span class="s2">"Courses"</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">]})</span>
+<span class="n">df</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Language</th>
+      <th>Courses</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Tom</td>
+      <td>Python</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mike</td>
+      <td>Python</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Tiffany</td>
+      <td>R</td>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Indexing-with-[]">
+<a class="anchor" href="#Indexing-with-%5B%5D" aria-hidden="true"><span class="octicon octicon-link"></span></a>Indexing with <code>[]</code><a class="anchor-link" href="#Indexing-with-%5B%5D"> </a>
+</h4>
+<p>Select columns by single labels, lists of labels, or slices:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'Name'</span><span class="p">]</span>  <span class="c1"># returns a series</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0        Tom
+1       Mike
+2    Tiffany
+Name: Name, dtype: object</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[[</span><span class="s1">'Name'</span><span class="p">]]</span>  <span class="c1"># returns a dataframe!</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Tom</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mike</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Tiffany</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[[</span><span class="s1">'Name'</span><span class="p">,</span> <span class="s1">'Language'</span><span class="p">]]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Language</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Tom</td>
+      <td>Python</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mike</td>
+      <td>Python</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Tiffany</td>
+      <td>R</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can only index rows by using slices, not single values (but not recommended, see preferred methods below).</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered celltag_raises-exception">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># doesn't work</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">KeyError</span>                                  Traceback (most recent call last)
+<span class="ansi-green-fg">/opt/miniconda3/lib/python3.7/site-packages/pandas/core/indexes/base.py</span> in <span class="ansi-cyan-fg">get_loc</span><span class="ansi-blue-fg">(self, key, method, tolerance)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2888</span>             <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 2889</span><span class="ansi-red-fg">                 </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_engine<span class="ansi-blue-fg">.</span>get_loc<span class="ansi-blue-fg">(</span>casted_key<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2890</span>             <span class="ansi-green-fg">except</span> KeyError <span class="ansi-green-fg">as</span> err<span class="ansi-blue-fg">:</span>
+
+<span class="ansi-green-fg">pandas/_libs/index.pyx</span> in <span class="ansi-cyan-fg">pandas._libs.index.IndexEngine.get_loc</span><span class="ansi-blue-fg">()</span>
+
+<span class="ansi-green-fg">pandas/_libs/index.pyx</span> in <span class="ansi-cyan-fg">pandas._libs.index.IndexEngine.get_loc</span><span class="ansi-blue-fg">()</span>
+
+<span class="ansi-green-fg">pandas/_libs/hashtable_class_helper.pxi</span> in <span class="ansi-cyan-fg">pandas._libs.hashtable.PyObjectHashTable.get_item</span><span class="ansi-blue-fg">()</span>
+
+<span class="ansi-green-fg">pandas/_libs/hashtable_class_helper.pxi</span> in <span class="ansi-cyan-fg">pandas._libs.hashtable.PyObjectHashTable.get_item</span><span class="ansi-blue-fg">()</span>
+
+<span class="ansi-red-fg">KeyError</span>: 0
+
+The above exception was the direct cause of the following exception:
+
+<span class="ansi-red-fg">KeyError</span>                                  Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-57-feb9bd85061b&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>df<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span> <span class="ansi-red-fg"># doesn't work</span>
+
+<span class="ansi-green-fg">/opt/miniconda3/lib/python3.7/site-packages/pandas/core/frame.py</span> in <span class="ansi-cyan-fg">__getitem__</span><span class="ansi-blue-fg">(self, key)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2900</span>             <span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>columns<span class="ansi-blue-fg">.</span>nlevels <span class="ansi-blue-fg">&gt;</span> <span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">   2901</span>                 <span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_getitem_multilevel<span class="ansi-blue-fg">(</span>key<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-fg">-&gt; 2902</span><span class="ansi-red-fg">             </span>indexer <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>columns<span class="ansi-blue-fg">.</span>get_loc<span class="ansi-blue-fg">(</span>key<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2903</span>             <span class="ansi-green-fg">if</span> is_integer<span class="ansi-blue-fg">(</span>indexer<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+<span class="ansi-green-intense-fg ansi-bold">   2904</span>                 indexer <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span>indexer<span class="ansi-blue-fg">]</span>
+
+<span class="ansi-green-fg">/opt/miniconda3/lib/python3.7/site-packages/pandas/core/indexes/base.py</span> in <span class="ansi-cyan-fg">get_loc</span><span class="ansi-blue-fg">(self, key, method, tolerance)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2889</span>                 <span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_engine<span class="ansi-blue-fg">.</span>get_loc<span class="ansi-blue-fg">(</span>casted_key<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2890</span>             <span class="ansi-green-fg">except</span> KeyError <span class="ansi-green-fg">as</span> err<span class="ansi-blue-fg">:</span>
+<span class="ansi-green-fg">-&gt; 2891</span><span class="ansi-red-fg">                 </span><span class="ansi-green-fg">raise</span> KeyError<span class="ansi-blue-fg">(</span>key<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">from</span> err
+<span class="ansi-green-intense-fg ansi-bold">   2892</span> 
+<span class="ansi-green-intense-fg ansi-bold">   2893</span>         <span class="ansi-green-fg">if</span> tolerance <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+
+<span class="ansi-red-fg">KeyError</span>: 0</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># does work</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Language</th>
+      <th>Courses</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Tom</td>
+      <td>Python</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="c1"># does work</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Language</th>
+      <th>Courses</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>Mike</td>
+      <td>Python</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Tiffany</td>
+      <td>R</td>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Indexing-with-.loc-and-.iloc">
+<a class="anchor" href="#Indexing-with-.loc-and-.iloc" aria-hidden="true"><span class="octicon octicon-link"></span></a>Indexing with <code>.loc</code> and <code>.iloc</code><a class="anchor-link" href="#Indexing-with-.loc-and-.iloc"> </a>
+</h4>
+<p>Pandas created the methods <code>.loc[]</code> and <code>.iloc[]</code> as more flexible alternatives for accessing data from a dataframe. Use <code>df.iloc[]</code> for indexing with integers and <code>df.loc[]</code> for indexing with labels. These are typically the <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated">recommended methods of indexing</a> in Pandas.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Language</th>
+      <th>Courses</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Tom</td>
+      <td>Python</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mike</td>
+      <td>Python</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Tiffany</td>
+      <td>R</td>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>First we'll try out <code>.iloc</code> which accepts <em>integers</em> as references to rows/columns:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># returns a series</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Name           Tom
+Language    Python
+Courses          5
+Name: 0, dtype: object</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># slicing returns a dataframe</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Language</th>
+      <th>Courses</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Tom</td>
+      <td>Python</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mike</td>
+      <td>Python</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># returns the indexed object</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'R'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>  <span class="c1"># returns a dataframe</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Language</th>
+      <th>Courses</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Python</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Python</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now let's look at <code>.loc</code> which accepts <em>labels</em> as references to rows/columns:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">'Name'</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0        Tom
+1       Mike
+2    Tiffany
+Name: Name, dtype: object</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">'Name'</span><span class="p">:</span><span class="s1">'Language'</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Language</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Tom</td>
+      <td>Python</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mike</td>
+      <td>Python</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Tiffany</td>
+      <td>R</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="s1">'Language'</span><span class="p">]]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Language</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Python</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>R</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Sometimes we want to use a mix of integers and labels to reference data in a dataframe. The easiest way to do this is to use <code>.loc[]</code> with a label then use an integer in combinations with <code>.index</code> or <code>.columns</code>:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>RangeIndex(start=0, stop=3, step=1)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Index(['Name', 'Language', 'Courses'], dtype='object')</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">'Courses'</span><span class="p">]</span>  <span class="c1"># I want to reference the first row and the column named "Courses"</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>5</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>  <span class="c1"># I want to reference row "2" and the second column</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>'R'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Boolean-indexing">
+<a class="anchor" href="#Boolean-indexing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Boolean indexing<a class="anchor-link" href="#Boolean-indexing"> </a>
+</h4>
+<p>Just like with series, we can select data based on boolean masks:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Language</th>
+      <th>Courses</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Tom</td>
+      <td>Python</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mike</td>
+      <td>Python</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Tiffany</td>
+      <td>R</td>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'Courses'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Language</th>
+      <th>Courses</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2</th>
+      <td>Tiffany</td>
+      <td>R</td>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">'Name'</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"Tom"</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Language</th>
+      <th>Courses</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Tom</td>
+      <td>Python</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Indexing-with-.query()">
+<a class="anchor" href="#Indexing-with-.query()" aria-hidden="true"><span class="octicon octicon-link"></span></a>Indexing with <code>.query()</code><a class="anchor-link" href="#Indexing-with-.query()"> </a>
+</h4>
+<p>Boolean masks work fine, but I prefer to use the <code>.query()</code> method for selecting data. <code>df.query()</code> is a powerful tool for filtering data. It has an odd syntax, one of the strangest I've seen in Python, it is more like SQL - <code>df.query()</code> accepts a string expression to evaluate and it "knows" the names of the columns in your dataframe.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">"Courses &gt; 4 &amp; Language == 'Python'"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Language</th>
+      <th>Courses</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Tom</td>
+      <td>Python</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note the use of single quotes AND double quotes above, lucky we have both in Python! Compare this to the equivalent boolean indexing operation and you can see that <code>.query()</code> is much more readable, especially as the query gets bigger!</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">'Courses'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'Language'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'Python'</span><span class="p">)]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Language</th>
+      <th>Courses</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Tom</td>
+      <td>Python</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Query also allows you to reference variable in the current workspace using the <code>@</code> symbol:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">course_threshold</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">df</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">"Courses &gt; @course_threshold"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Language</th>
+      <th>Courses</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Tom</td>
+      <td>Python</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Tiffany</td>
+      <td>R</td>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Indexing-cheatsheet">
+<a class="anchor" href="#Indexing-cheatsheet" aria-hidden="true"><span class="octicon octicon-link"></span></a>Indexing cheatsheet<a class="anchor-link" href="#Indexing-cheatsheet"> </a>
+</h4>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Syntax</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Select column</td>
+<td><code>df[col_label]</code></td>
+<td>Series</td>
+</tr>
+<tr>
+<td>Select row slice</td>
+<td><code>df[row_1_int:row_2_int]</code></td>
+<td>DataFrame</td>
+</tr>
+<tr>
+<td>Select row/column by label</td>
+<td><code>df.loc[row_label(s), col_label(s)]</code></td>
+<td>Object for single selection, Series for one row/column, otherwise DataFrame</td>
+</tr>
+<tr>
+<td>Select row/column by integer</td>
+<td><code>df.iloc[row_int(s), col_int(s)]</code></td>
+<td>Object for single selection, Series for one row/column, otherwise DataFrame</td>
+</tr>
+<tr>
+<td>Select by row integer &amp; column label</td>
+<td><code>df.loc[df.index[row_int], col_label]</code></td>
+<td>Object for single selection, Series for one row/column, otherwise DataFrame</td>
+</tr>
+<tr>
+<td>Select by row label &amp; column integer</td>
+<td><code>df.loc[row_label, df.columns[col_int]]</code></td>
+<td>Object for single selection, Series for one row/column, otherwise DataFrame</td>
+</tr>
+<tr>
+<td>Select by boolean</td>
+<td><code>df[bool_vec]</code></td>
+<td>Object for single selection, Series for one row/column, otherwise DataFrame</td>
+</tr>
+<tr>
+<td>Select by boolean expression</td>
+<td><code>df.query("expression")</code></td>
+<td>Object for single selection, Series for one row/column, otherwise DataFrame</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Reading/Writing-Data-From-External-Sources">
+<a class="anchor" href="#Reading/Writing-Data-From-External-Sources" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reading/Writing Data From External Sources<a class="anchor-link" href="#Reading/Writing-Data-From-External-Sources"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id=".csv-files">
+<a class="anchor" href="#.csv-files" aria-hidden="true"><span class="octicon octicon-link"></span></a>.csv files<a class="anchor-link" href="#.csv-files"> </a>
+</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>A lot of the time you will be loading .csv files for use in pandas. You can use the <code>pd.read_csv()</code> function for this. In the following chapters we'll use a real dataset of my cycling commutes to the University of British Columbia. There are so many arguments that can be used to help read in your .csv file in an efficient and appropriate manner, feel free to check them out now (by using <code>shift + tab</code> in Jupyter, or typing <code>help(pd.read_csv)</code>).</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="s1">'data/cycling_data.csv'</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Time</th>
+      <th>Distance</th>
+      <th>Comments</th>
+    </tr>
+    <tr>
+      <th>Date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2019-09-10 00:13:04</th>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>2084</td>
+      <td>12.62</td>
+      <td>Rain</td>
+    </tr>
+    <tr>
+      <th>2019-09-10 13:52:18</th>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2531</td>
+      <td>13.03</td>
+      <td>rain</td>
+    </tr>
+    <tr>
+      <th>2019-09-11 00:23:50</th>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1863</td>
+      <td>12.52</td>
+      <td>Wet road but nice weather</td>
+    </tr>
+    <tr>
+      <th>2019-09-11 14:06:19</th>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2192</td>
+      <td>12.84</td>
+      <td>Stopped for photo of sunrise</td>
+    </tr>
+    <tr>
+      <th>2019-09-12 00:28:05</th>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1891</td>
+      <td>12.48</td>
+      <td>Tired by the end of the week</td>
+    </tr>
+    <tr>
+      <th>2019-09-16 13:57:48</th>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2272</td>
+      <td>12.45</td>
+      <td>Rested after the weekend!</td>
+    </tr>
+    <tr>
+      <th>2019-09-17 00:15:47</th>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1973</td>
+      <td>12.45</td>
+      <td>Legs feeling strong!</td>
+    </tr>
+    <tr>
+      <th>2019-09-17 13:43:34</th>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2285</td>
+      <td>12.60</td>
+      <td>Raining</td>
+    </tr>
+    <tr>
+      <th>2019-09-18 13:49:53</th>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2903</td>
+      <td>14.57</td>
+      <td>Raining today</td>
+    </tr>
+    <tr>
+      <th>2019-09-18 00:15:52</th>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>2101</td>
+      <td>12.48</td>
+      <td>Pumped up tires</td>
+    </tr>
+    <tr>
+      <th>2019-09-19 00:30:01</th>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>48062</td>
+      <td>12.48</td>
+      <td>Feeling good</td>
+    </tr>
+    <tr>
+      <th>2019-09-19 13:52:09</th>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2090</td>
+      <td>12.59</td>
+      <td>Getting colder which is nice</td>
+    </tr>
+    <tr>
+      <th>2019-09-20 01:02:05</th>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>2961</td>
+      <td>12.81</td>
+      <td>Feeling good</td>
+    </tr>
+    <tr>
+      <th>2019-09-23 13:50:41</th>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2462</td>
+      <td>12.68</td>
+      <td>Rested after the weekend!</td>
+    </tr>
+    <tr>
+      <th>2019-09-24 00:35:42</th>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>2076</td>
+      <td>12.47</td>
+      <td>Oiled chain, bike feels smooth</td>
+    </tr>
+    <tr>
+      <th>2019-09-24 13:41:24</th>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2321</td>
+      <td>12.68</td>
+      <td>Bike feeling much smoother</td>
+    </tr>
+    <tr>
+      <th>2019-09-25 00:07:21</th>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1775</td>
+      <td>12.10</td>
+      <td>Feeling really tired</td>
+    </tr>
+    <tr>
+      <th>2019-09-25 13:35:41</th>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2124</td>
+      <td>12.65</td>
+      <td>Stopped for photo of sunrise</td>
+    </tr>
+    <tr>
+      <th>2019-09-26 00:13:33</th>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1860</td>
+      <td>12.52</td>
+      <td>raining</td>
+    </tr>
+    <tr>
+      <th>2019-09-26 13:42:43</th>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2350</td>
+      <td>12.91</td>
+      <td>Detour around trucks at Jericho</td>
+    </tr>
+    <tr>
+      <th>2019-09-27 01:00:18</th>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1712</td>
+      <td>12.47</td>
+      <td>Tired by the end of the week</td>
+    </tr>
+    <tr>
+      <th>2019-09-30 13:53:52</th>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2118</td>
+      <td>12.71</td>
+      <td>Rested after the weekend!</td>
+    </tr>
+    <tr>
+      <th>2019-10-01 00:15:07</th>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1732</td>
+      <td>NaN</td>
+      <td>Legs feeling strong!</td>
+    </tr>
+    <tr>
+      <th>2019-10-01 13:45:55</th>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2222</td>
+      <td>12.82</td>
+      <td>Beautiful morning! Feeling fit</td>
+    </tr>
+    <tr>
+      <th>2019-10-02 00:13:09</th>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1756</td>
+      <td>NaN</td>
+      <td>A little tired today but good weather</td>
+    </tr>
+    <tr>
+      <th>2019-10-02 13:46:06</th>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2134</td>
+      <td>13.06</td>
+      <td>Bit tired today but good weather</td>
+    </tr>
+    <tr>
+      <th>2019-10-03 00:45:22</th>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1724</td>
+      <td>12.52</td>
+      <td>Feeling good</td>
+    </tr>
+    <tr>
+      <th>2019-10-03 13:47:36</th>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2182</td>
+      <td>12.68</td>
+      <td>Wet road</td>
+    </tr>
+    <tr>
+      <th>2019-10-04 01:08:08</th>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1870</td>
+      <td>12.63</td>
+      <td>Very tired, riding into the wind</td>
+    </tr>
+    <tr>
+      <th>2019-10-09 13:55:40</th>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2149</td>
+      <td>12.70</td>
+      <td>Really cold! But feeling good</td>
+    </tr>
+    <tr>
+      <th>2019-10-10 00:10:31</th>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1841</td>
+      <td>12.59</td>
+      <td>Feeling good after a holiday break!</td>
+    </tr>
+    <tr>
+      <th>2019-10-10 13:47:14</th>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2463</td>
+      <td>12.79</td>
+      <td>Stopped for photo of sunrise</td>
+    </tr>
+    <tr>
+      <th>2019-10-11 00:16:57</th>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1843</td>
+      <td>11.79</td>
+      <td>Bike feeling tight, needs an oil and pump</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can print a dataframe to .csv using <code>df.to_csv()</code>. Be sure to check out all of the possible arguments to write your dataframe exactly how you want it.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="url">
+<a class="anchor" href="#url" aria-hidden="true"><span class="octicon octicon-link"></span></a>url<a class="anchor-link" href="#url"> </a>
+</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Pandas also facilitates reading directly from a url - <code>pd.read_csv()</code> accepts urls as input:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">'https://raw.githubusercontent.com/TomasBeuzen/toy-datasets/master/wine_1.csv'</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Bottle</th>
+      <th>Grape</th>
+      <th>Origin</th>
+      <th>Alcohol</th>
+      <th>pH</th>
+      <th>Colour</th>
+      <th>Aroma</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Chardonnay</td>
+      <td>Australia</td>
+      <td>14.23</td>
+      <td>3.51</td>
+      <td>White</td>
+      <td>Floral</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Pinot Grigio</td>
+      <td>Italy</td>
+      <td>13.20</td>
+      <td>3.30</td>
+      <td>White</td>
+      <td>Fruity</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Pinot Blanc</td>
+      <td>France</td>
+      <td>13.16</td>
+      <td>3.16</td>
+      <td>White</td>
+      <td>Citrus</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Shiraz</td>
+      <td>Chile</td>
+      <td>14.91</td>
+      <td>3.39</td>
+      <td>Red</td>
+      <td>Berry</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Malbec</td>
+      <td>Argentina</td>
+      <td>13.83</td>
+      <td>3.28</td>
+      <td>Red</td>
+      <td>Fruity</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Other">
+<a class="anchor" href="#Other" aria-hidden="true"><span class="octicon octicon-link"></span></a>Other<a class="anchor-link" href="#Other"> </a>
+</h4>
+<p>Pandas can read data from all sorts of other file types including HTML, JSON, Excel, Parquet, Feather, etc. There are generally dedicated functions for reading these file types, see the <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html#io-tools-text-csv-hdf5">Pandas documentation here</a>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Common-DataFrame-Operations">
+<a class="anchor" href="#Common-DataFrame-Operations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Common DataFrame Operations<a class="anchor-link" href="#Common-DataFrame-Operations"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>DataFrames have built-in functions for performing most common operations, e.g., <code>.min()</code>, <code>idxmin()</code>, <code>sort_values()</code>, etc. They're all documented in the <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html">Pandas documentation here</a> but I'll demonstrate a few below:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'data/cycling_data.csv'</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Time</th>
+      <th>Distance</th>
+      <th>Comments</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>10 Sep 2019, 00:13:04</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>2084</td>
+      <td>12.62</td>
+      <td>Rain</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10 Sep 2019, 13:52:18</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2531</td>
+      <td>13.03</td>
+      <td>rain</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>11 Sep 2019, 00:23:50</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1863</td>
+      <td>12.52</td>
+      <td>Wet road but nice weather</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11 Sep 2019, 14:06:19</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2192</td>
+      <td>12.84</td>
+      <td>Stopped for photo of sunrise</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>12 Sep 2019, 00:28:05</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1891</td>
+      <td>12.48</td>
+      <td>Tired by the end of the week</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>16 Sep 2019, 13:57:48</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2272</td>
+      <td>12.45</td>
+      <td>Rested after the weekend!</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>17 Sep 2019, 00:15:47</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1973</td>
+      <td>12.45</td>
+      <td>Legs feeling strong!</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>17 Sep 2019, 13:43:34</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2285</td>
+      <td>12.60</td>
+      <td>Raining</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>18 Sep 2019, 13:49:53</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2903</td>
+      <td>14.57</td>
+      <td>Raining today</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>18 Sep 2019, 00:15:52</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>2101</td>
+      <td>12.48</td>
+      <td>Pumped up tires</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>19 Sep 2019, 00:30:01</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>48062</td>
+      <td>12.48</td>
+      <td>Feeling good</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>19 Sep 2019, 13:52:09</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2090</td>
+      <td>12.59</td>
+      <td>Getting colder which is nice</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>20 Sep 2019, 01:02:05</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>2961</td>
+      <td>12.81</td>
+      <td>Feeling good</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>23 Sep 2019, 13:50:41</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2462</td>
+      <td>12.68</td>
+      <td>Rested after the weekend!</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>24 Sep 2019, 00:35:42</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>2076</td>
+      <td>12.47</td>
+      <td>Oiled chain, bike feels smooth</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>24 Sep 2019, 13:41:24</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2321</td>
+      <td>12.68</td>
+      <td>Bike feeling much smoother</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>25 Sep 2019, 00:07:21</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1775</td>
+      <td>12.10</td>
+      <td>Feeling really tired</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>25 Sep 2019, 13:35:41</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2124</td>
+      <td>12.65</td>
+      <td>Stopped for photo of sunrise</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>26 Sep 2019, 00:13:33</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1860</td>
+      <td>12.52</td>
+      <td>raining</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>26 Sep 2019, 13:42:43</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2350</td>
+      <td>12.91</td>
+      <td>Detour around trucks at Jericho</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>27 Sep 2019, 01:00:18</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1712</td>
+      <td>12.47</td>
+      <td>Tired by the end of the week</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>30 Sep 2019, 13:53:52</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2118</td>
+      <td>12.71</td>
+      <td>Rested after the weekend!</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>1 Oct 2019, 00:15:07</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1732</td>
+      <td>NaN</td>
+      <td>Legs feeling strong!</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>1 Oct 2019, 13:45:55</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2222</td>
+      <td>12.82</td>
+      <td>Beautiful morning! Feeling fit</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>2 Oct 2019, 00:13:09</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1756</td>
+      <td>NaN</td>
+      <td>A little tired today but good weather</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>2 Oct 2019, 13:46:06</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2134</td>
+      <td>13.06</td>
+      <td>Bit tired today but good weather</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>3 Oct 2019, 00:45:22</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1724</td>
+      <td>12.52</td>
+      <td>Feeling good</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>3 Oct 2019, 13:47:36</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2182</td>
+      <td>12.68</td>
+      <td>Wet road</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>4 Oct 2019, 01:08:08</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1870</td>
+      <td>12.63</td>
+      <td>Very tired, riding into the wind</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>9 Oct 2019, 13:55:40</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2149</td>
+      <td>12.70</td>
+      <td>Really cold! But feeling good</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>10 Oct 2019, 00:10:31</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1841</td>
+      <td>12.59</td>
+      <td>Feeling good after a holiday break!</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>10 Oct 2019, 13:47:14</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2463</td>
+      <td>12.79</td>
+      <td>Stopped for photo of sunrise</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>11 Oct 2019, 00:16:57</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1843</td>
+      <td>11.79</td>
+      <td>Bike feeling tight, needs an oil and pump</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Date                         1 Oct 2019, 00:15:07
+Name                               Afternoon Ride
+Type                                         Ride
+Time                                         1712
+Distance                                    11.79
+Comments    A little tired today but good weather
+dtype: object</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'Time'</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1712</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">'Time'</span><span class="p">]</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>20</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Date               27 Sep 2019, 01:00:18
+Name                      Afternoon Ride
+Type                                Ride
+Time                                1712
+Distance                           12.47
+Comments    Tired by the end of the week
+Name: 20, dtype: object</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Date        10 Sep 2019, 00:13:0410 Sep 2019, 13:52:1811 S...
+Name        Afternoon RideMorning RideAfternoon RideMornin...
+Type        RideRideRideRideRideRideRideRideRideRideRideRi...
+Time                                                   115922
+Distance                                               392.69
+Comments    RainrainWet road but nice weatherStopped for p...
+dtype: object</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Some methods like <code>.mean()</code> will only operate on numeric columns:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Time        3512.787879
+Distance      12.667419
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Some methods require arguments to be specified, like <code>.sort_values()</code>:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">'Time'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Time</th>
+      <th>Distance</th>
+      <th>Comments</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>20</th>
+      <td>27 Sep 2019, 01:00:18</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1712</td>
+      <td>12.47</td>
+      <td>Tired by the end of the week</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>3 Oct 2019, 00:45:22</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1724</td>
+      <td>12.52</td>
+      <td>Feeling good</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>1 Oct 2019, 00:15:07</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1732</td>
+      <td>NaN</td>
+      <td>Legs feeling strong!</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>2 Oct 2019, 00:13:09</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1756</td>
+      <td>NaN</td>
+      <td>A little tired today but good weather</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>25 Sep 2019, 00:07:21</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1775</td>
+      <td>12.10</td>
+      <td>Feeling really tired</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>10 Oct 2019, 00:10:31</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1841</td>
+      <td>12.59</td>
+      <td>Feeling good after a holiday break!</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>11 Oct 2019, 00:16:57</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1843</td>
+      <td>11.79</td>
+      <td>Bike feeling tight, needs an oil and pump</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>26 Sep 2019, 00:13:33</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1860</td>
+      <td>12.52</td>
+      <td>raining</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>11 Sep 2019, 00:23:50</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1863</td>
+      <td>12.52</td>
+      <td>Wet road but nice weather</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>4 Oct 2019, 01:08:08</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1870</td>
+      <td>12.63</td>
+      <td>Very tired, riding into the wind</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>12 Sep 2019, 00:28:05</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1891</td>
+      <td>12.48</td>
+      <td>Tired by the end of the week</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>17 Sep 2019, 00:15:47</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1973</td>
+      <td>12.45</td>
+      <td>Legs feeling strong!</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>24 Sep 2019, 00:35:42</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>2076</td>
+      <td>12.47</td>
+      <td>Oiled chain, bike feels smooth</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>10 Sep 2019, 00:13:04</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>2084</td>
+      <td>12.62</td>
+      <td>Rain</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>19 Sep 2019, 13:52:09</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2090</td>
+      <td>12.59</td>
+      <td>Getting colder which is nice</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>18 Sep 2019, 00:15:52</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>2101</td>
+      <td>12.48</td>
+      <td>Pumped up tires</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>30 Sep 2019, 13:53:52</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2118</td>
+      <td>12.71</td>
+      <td>Rested after the weekend!</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>25 Sep 2019, 13:35:41</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2124</td>
+      <td>12.65</td>
+      <td>Stopped for photo of sunrise</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>2 Oct 2019, 13:46:06</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2134</td>
+      <td>13.06</td>
+      <td>Bit tired today but good weather</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>9 Oct 2019, 13:55:40</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2149</td>
+      <td>12.70</td>
+      <td>Really cold! But feeling good</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>3 Oct 2019, 13:47:36</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2182</td>
+      <td>12.68</td>
+      <td>Wet road</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11 Sep 2019, 14:06:19</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2192</td>
+      <td>12.84</td>
+      <td>Stopped for photo of sunrise</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>1 Oct 2019, 13:45:55</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2222</td>
+      <td>12.82</td>
+      <td>Beautiful morning! Feeling fit</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>16 Sep 2019, 13:57:48</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2272</td>
+      <td>12.45</td>
+      <td>Rested after the weekend!</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>17 Sep 2019, 13:43:34</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2285</td>
+      <td>12.60</td>
+      <td>Raining</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>24 Sep 2019, 13:41:24</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2321</td>
+      <td>12.68</td>
+      <td>Bike feeling much smoother</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>26 Sep 2019, 13:42:43</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2350</td>
+      <td>12.91</td>
+      <td>Detour around trucks at Jericho</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>23 Sep 2019, 13:50:41</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2462</td>
+      <td>12.68</td>
+      <td>Rested after the weekend!</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>10 Oct 2019, 13:47:14</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2463</td>
+      <td>12.79</td>
+      <td>Stopped for photo of sunrise</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10 Sep 2019, 13:52:18</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2531</td>
+      <td>13.03</td>
+      <td>rain</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>18 Sep 2019, 13:49:53</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2903</td>
+      <td>14.57</td>
+      <td>Raining today</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>20 Sep 2019, 01:02:05</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>2961</td>
+      <td>12.81</td>
+      <td>Feeling good</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>19 Sep 2019, 00:30:01</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>48062</td>
+      <td>12.48</td>
+      <td>Feeling good</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">'Time'</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Time</th>
+      <th>Distance</th>
+      <th>Comments</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>10</th>
+      <td>19 Sep 2019, 00:30:01</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>48062</td>
+      <td>12.48</td>
+      <td>Feeling good</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>20 Sep 2019, 01:02:05</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>2961</td>
+      <td>12.81</td>
+      <td>Feeling good</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>18 Sep 2019, 13:49:53</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2903</td>
+      <td>14.57</td>
+      <td>Raining today</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10 Sep 2019, 13:52:18</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2531</td>
+      <td>13.03</td>
+      <td>rain</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>10 Oct 2019, 13:47:14</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2463</td>
+      <td>12.79</td>
+      <td>Stopped for photo of sunrise</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>23 Sep 2019, 13:50:41</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2462</td>
+      <td>12.68</td>
+      <td>Rested after the weekend!</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>26 Sep 2019, 13:42:43</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2350</td>
+      <td>12.91</td>
+      <td>Detour around trucks at Jericho</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>24 Sep 2019, 13:41:24</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2321</td>
+      <td>12.68</td>
+      <td>Bike feeling much smoother</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>17 Sep 2019, 13:43:34</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2285</td>
+      <td>12.60</td>
+      <td>Raining</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>16 Sep 2019, 13:57:48</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2272</td>
+      <td>12.45</td>
+      <td>Rested after the weekend!</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>1 Oct 2019, 13:45:55</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2222</td>
+      <td>12.82</td>
+      <td>Beautiful morning! Feeling fit</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11 Sep 2019, 14:06:19</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2192</td>
+      <td>12.84</td>
+      <td>Stopped for photo of sunrise</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>3 Oct 2019, 13:47:36</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2182</td>
+      <td>12.68</td>
+      <td>Wet road</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>9 Oct 2019, 13:55:40</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2149</td>
+      <td>12.70</td>
+      <td>Really cold! But feeling good</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>2 Oct 2019, 13:46:06</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2134</td>
+      <td>13.06</td>
+      <td>Bit tired today but good weather</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>25 Sep 2019, 13:35:41</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2124</td>
+      <td>12.65</td>
+      <td>Stopped for photo of sunrise</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>30 Sep 2019, 13:53:52</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2118</td>
+      <td>12.71</td>
+      <td>Rested after the weekend!</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>18 Sep 2019, 00:15:52</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>2101</td>
+      <td>12.48</td>
+      <td>Pumped up tires</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>19 Sep 2019, 13:52:09</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2090</td>
+      <td>12.59</td>
+      <td>Getting colder which is nice</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>10 Sep 2019, 00:13:04</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>2084</td>
+      <td>12.62</td>
+      <td>Rain</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>24 Sep 2019, 00:35:42</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>2076</td>
+      <td>12.47</td>
+      <td>Oiled chain, bike feels smooth</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>17 Sep 2019, 00:15:47</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1973</td>
+      <td>12.45</td>
+      <td>Legs feeling strong!</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>12 Sep 2019, 00:28:05</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1891</td>
+      <td>12.48</td>
+      <td>Tired by the end of the week</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>4 Oct 2019, 01:08:08</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1870</td>
+      <td>12.63</td>
+      <td>Very tired, riding into the wind</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>11 Sep 2019, 00:23:50</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1863</td>
+      <td>12.52</td>
+      <td>Wet road but nice weather</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>26 Sep 2019, 00:13:33</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1860</td>
+      <td>12.52</td>
+      <td>raining</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>11 Oct 2019, 00:16:57</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1843</td>
+      <td>11.79</td>
+      <td>Bike feeling tight, needs an oil and pump</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>10 Oct 2019, 00:10:31</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1841</td>
+      <td>12.59</td>
+      <td>Feeling good after a holiday break!</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>25 Sep 2019, 00:07:21</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1775</td>
+      <td>12.10</td>
+      <td>Feeling really tired</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>2 Oct 2019, 00:13:09</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1756</td>
+      <td>NaN</td>
+      <td>A little tired today but good weather</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>1 Oct 2019, 00:15:07</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1732</td>
+      <td>NaN</td>
+      <td>Legs feeling strong!</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>3 Oct 2019, 00:45:22</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1724</td>
+      <td>12.52</td>
+      <td>Feeling good</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>27 Sep 2019, 01:00:18</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1712</td>
+      <td>12.47</td>
+      <td>Tired by the end of the week</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Some methods will operate on the index/columns, like <code>.sort_index()</code>:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Time</th>
+      <th>Distance</th>
+      <th>Comments</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>32</th>
+      <td>11 Oct 2019, 00:16:57</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1843</td>
+      <td>11.79</td>
+      <td>Bike feeling tight, needs an oil and pump</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>10 Oct 2019, 13:47:14</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2463</td>
+      <td>12.79</td>
+      <td>Stopped for photo of sunrise</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>10 Oct 2019, 00:10:31</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1841</td>
+      <td>12.59</td>
+      <td>Feeling good after a holiday break!</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>9 Oct 2019, 13:55:40</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2149</td>
+      <td>12.70</td>
+      <td>Really cold! But feeling good</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>4 Oct 2019, 01:08:08</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1870</td>
+      <td>12.63</td>
+      <td>Very tired, riding into the wind</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>3 Oct 2019, 13:47:36</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2182</td>
+      <td>12.68</td>
+      <td>Wet road</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>3 Oct 2019, 00:45:22</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1724</td>
+      <td>12.52</td>
+      <td>Feeling good</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>2 Oct 2019, 13:46:06</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2134</td>
+      <td>13.06</td>
+      <td>Bit tired today but good weather</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>2 Oct 2019, 00:13:09</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1756</td>
+      <td>NaN</td>
+      <td>A little tired today but good weather</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>1 Oct 2019, 13:45:55</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2222</td>
+      <td>12.82</td>
+      <td>Beautiful morning! Feeling fit</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>1 Oct 2019, 00:15:07</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1732</td>
+      <td>NaN</td>
+      <td>Legs feeling strong!</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>30 Sep 2019, 13:53:52</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2118</td>
+      <td>12.71</td>
+      <td>Rested after the weekend!</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>27 Sep 2019, 01:00:18</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1712</td>
+      <td>12.47</td>
+      <td>Tired by the end of the week</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>26 Sep 2019, 13:42:43</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2350</td>
+      <td>12.91</td>
+      <td>Detour around trucks at Jericho</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>26 Sep 2019, 00:13:33</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1860</td>
+      <td>12.52</td>
+      <td>raining</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>25 Sep 2019, 13:35:41</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2124</td>
+      <td>12.65</td>
+      <td>Stopped for photo of sunrise</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>25 Sep 2019, 00:07:21</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1775</td>
+      <td>12.10</td>
+      <td>Feeling really tired</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>24 Sep 2019, 13:41:24</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2321</td>
+      <td>12.68</td>
+      <td>Bike feeling much smoother</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>24 Sep 2019, 00:35:42</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>2076</td>
+      <td>12.47</td>
+      <td>Oiled chain, bike feels smooth</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>23 Sep 2019, 13:50:41</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2462</td>
+      <td>12.68</td>
+      <td>Rested after the weekend!</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>20 Sep 2019, 01:02:05</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>2961</td>
+      <td>12.81</td>
+      <td>Feeling good</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>19 Sep 2019, 13:52:09</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2090</td>
+      <td>12.59</td>
+      <td>Getting colder which is nice</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>19 Sep 2019, 00:30:01</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>48062</td>
+      <td>12.48</td>
+      <td>Feeling good</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>18 Sep 2019, 00:15:52</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>2101</td>
+      <td>12.48</td>
+      <td>Pumped up tires</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>18 Sep 2019, 13:49:53</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2903</td>
+      <td>14.57</td>
+      <td>Raining today</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>17 Sep 2019, 13:43:34</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2285</td>
+      <td>12.60</td>
+      <td>Raining</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>17 Sep 2019, 00:15:47</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1973</td>
+      <td>12.45</td>
+      <td>Legs feeling strong!</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>16 Sep 2019, 13:57:48</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2272</td>
+      <td>12.45</td>
+      <td>Rested after the weekend!</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>12 Sep 2019, 00:28:05</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1891</td>
+      <td>12.48</td>
+      <td>Tired by the end of the week</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11 Sep 2019, 14:06:19</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2192</td>
+      <td>12.84</td>
+      <td>Stopped for photo of sunrise</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>11 Sep 2019, 00:23:50</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>1863</td>
+      <td>12.52</td>
+      <td>Wet road but nice weather</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10 Sep 2019, 13:52:18</td>
+      <td>Morning Ride</td>
+      <td>Ride</td>
+      <td>2531</td>
+      <td>13.03</td>
+      <td>rain</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>10 Sep 2019, 00:13:04</td>
+      <td>Afternoon Ride</td>
+      <td>Ride</td>
+      <td>2084</td>
+      <td>12.62</td>
+      <td>Rain</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="4.-Why-ndarrays-and-Series-and-DataFrames?">
+<a class="anchor" href="#4.-Why-ndarrays-and-Series-and-DataFrames?" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. Why ndarrays and Series and DataFrames?<a class="anchor-link" href="#4.-Why-ndarrays-and-Series-and-DataFrames?"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>At this point, you might be asking why we need all these different data structures. Well, they all serve different purposes and are suited to different tasks. For example:</p>
+<ul>
+<li>NumPy is typically faster/uses less memory than Pandas;</li>
+<li>not all Python packages are compatible with NumPy &amp; Pandas;</li>
+<li>the ability to add labels to data can be useful (e.g., for time series);</li>
+<li>NumPy and Pandas have different built-in functions available.</li>
+</ul>
+<p>My advice: use the simplest data structure that fulfills your needs!</p>
+<p>Finally, we've seen how to go from: ndarray (<code>np.array()</code>) -&gt; series (<code>pd.series()</code>) -&gt; dataframe (<code>pd.DataFrame()</code>). Remember that we can also go the other way: dataframe/series -&gt; ndarray using <code>df.to_numpy()</code>.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="millermuttu/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blog/jupyter/python/data%20science/programming/pandas/2022/05/11/chapter7-pandas.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Data science blogging - All opnions are personal only</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/millermuttu" target="_blank" title="millermuttu"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/mallikarjunvsaj" target="_blank" title="mallikarjunvsaj"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
