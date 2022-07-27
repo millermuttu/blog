@@ -26,7 +26,8 @@ This is what i am currently busy with:
 
 <h3 align="Left">Tech Stack</h3>
 
-![](https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/python/python.png "https://www.python.org/")
+<img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/python/python.png" alt="drawing" width="50" height="50"/> <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/r/r.png" alt="drawing" width="50" height="50"/> <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/matlab/matlab.png" alt="drawing" width="50" height="50"/> 
+<img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/julia/julia.png" alt="drawing" width="50" height="50"/>
 
 <br />
 
@@ -44,23 +45,6 @@ This is what i am currently busy with:
 <h3 align="center">GitHub Stats</h3>
 <p align="center">
   <img height="170" src="https://github-readme-stats.vercel.app/api?username=millermuttu&show_icons=true&count_private=true&hide_border=true&hide_title=true" />
-</p>
-
-
-<h3 align="center">Want to connect?</h3>
-<p align="center">
-  <a href="https://millermuttu.github.io/">
-    <img align="center" alt="Portfolio" width="20px" src="https://raw.githubusercontent.com/iconic/open-iconic/master/svg/globe.svg" />
-  </a>
-  <a href="https://www.linkedin.com/in/mallikarjun-v-sajjan-0465a6103">
-    <img align="center" alt="Linkedin" width="20px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/linkedin.svg" />
-  </a>
-  <a href="https://t.me/Mullermuttu">
-    <img align="center" alt="Telegram" width="20px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/telegram.svg" />
-  </a>
-  <a href="https://www.instagram.com/flying_muttu/">
-    <img align="center" alt="Instagram" width="20px" src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/instagram.svg" />
-  </a>
 </p>
 
 <br />
